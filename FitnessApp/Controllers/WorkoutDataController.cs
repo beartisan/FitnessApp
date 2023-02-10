@@ -16,7 +16,16 @@ namespace FitnessApp.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: api/WorkoutData/WorkoutList
+        /// <summary>
+        /// Returns all workout in the system.
+        /// </summary>
+        /// <returns>
+        /// CONTENT: all workout in the database, including their categories.
+        /// </returns>
+        /// <example>
+        ///GET: api/WorkoutData/WorkoutList
+        /// </example>
+       
         [HttpGet]
         public IEnumerable<WorkoutDto> WorkoutList()
         {
