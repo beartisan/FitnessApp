@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 using System.Diagnostics;
+using FitnessApp.Models;
 
 namespace FitnessApp.Controllers
 {
@@ -25,13 +26,35 @@ namespace FitnessApp.Controllers
             Debug.WriteLine("The request is ");
             Debug.WriteLine(response.StatusCode);
 
-            return View();
+            //parse message into IEnumerable
+            IEnumerable<WorkoutDto> Workouts = response.Content.ReadAsAsync<IEnumerable<WorkoutDto>>().Result;
+            Debug.WriteLine("Number of workouts are : ");
+            Debug.WriteLine(Workouts.Count());
+
+
+            return View(Workouts);
         }
 
         // GET: Workout/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            //objective: communicate with our workout data api to retrieve a workout
+            //curl https://localhost:44376/api/workoutdata/findworkout/{id}
+
+            HttpClient client = new HttpClient() { };
+            //establish URL communication endpoint
+            string url = "https://localhost:44376/api/workoutdata/findworkout/"+id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+
+            Debug.WriteLine("The request is ");
+            Debug.WriteLine(response.StatusCode);
+
+            //parse message into IEnumerable
+            WorkoutDto selectedWorkout = response.Content.ReadAsAsync<WorkoutDto>().Result;
+            Debug.WriteLine("Workout Found is : ");
+            Debug.WriteLine(selectedWorkout.WorkoutName);
+
+            return View(selectedWorkout);
         }
 
         // GET: Workout/Create

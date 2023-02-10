@@ -1,0 +1,14 @@
+﻿@model IEnumerable<FitnessApp.Models.WorkoutDto>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+@foreach (var Workout in Model)
+{
+    <h2>@Workout.WorkoutName</h2>
+    <div>Date: @Workout.WorkoutDate.Date </div>
+    <div>Timer: @Workout.WorkoutDuration minutes</div>
+    <div>Category: @Workout.CategoryName</div>
+}
