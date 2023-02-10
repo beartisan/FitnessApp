@@ -25,7 +25,7 @@ namespace FitnessApp.Models
         {
         }
 
-        //add workout entity to our system
+        //add Workout entity to our system
         public DbSet<Workout> Workouts { get; set; }
 
         public DbSet<Category> Categories { get; set; }

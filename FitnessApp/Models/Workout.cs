@@ -21,19 +21,35 @@ namespace FitnessApp.Models
         //time in minutes
         public int WorkoutDuration { get; set; }
 
-        //workout foreign key to category entity
+        //Workout foreign key to category entity
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
 
         //trainer id
 
-        //a workout have a lot of athlete
-        //athlete can have a lot of workouts
+        //a Workout have a lot of athlete
+        //athlete can have a lot of Workouts
         public ICollection<Athlete> Athletes { get; set; }
-
 
         //location id
 
     }
+
+    public class WorkoutDto
+    {
+        public int WorkoutId { get; set; }
+
+        public string WorkoutName { get; set; }
+
+        //date only
+        public DateTime WorkoutDate { get; set; }
+
+        //time in minutes
+        public int WorkoutDuration { get; set; }
+
+        public string CategoryName { get; set; }
+
+    }
+
 }

@@ -16,40 +16,64 @@ namespace FitnessApp.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: api/WorkoutData
-        public IQueryable<Workout> GetWorkouts()
+        // GET: api/WorkoutData/WorkoutList
+        [HttpGet]
+        public IEnumerable<WorkoutDto> WorkoutList()
         {
-            return db.Workouts;
+            List<Workout> Workouts = db.Workouts.ToList();
+            List<WorkoutDto> WorkoutDtos = new List<WorkoutDto>();
+
+            Workouts.ForEach(w => WorkoutDtos.Add(new WorkoutDto()
+            {
+                WorkoutId = w.WorkoutId,
+                WorkoutName = w.WorkoutName,
+                WorkoutDate = w.WorkoutDate,
+                WorkoutDuration = w.WorkoutDuration,
+                CategoryName = w.Category.CategoryName
+            }));
+
+            return WorkoutDtos;
         }
 
-        // GET: api/WorkoutData/5
+        // GET: api/WorkoutData/FindWorkout/5
         [ResponseType(typeof(Workout))]
-        public IHttpActionResult GetWorkout(int id)
+        [HttpGet]
+        public IHttpActionResult FindWorkout(int id)
         {
-            Workout workout = db.Workouts.Find(id);
-            if (workout == null)
+            Workout Workout = db.Workouts.Find(id);
+            WorkoutDto WorkoutDto = new WorkoutDto()
+            {
+                WorkoutId = Workout.WorkoutId,
+                WorkoutName = Workout.WorkoutName,
+                WorkoutDate = Workout.WorkoutDate,
+                WorkoutDuration = Workout.WorkoutDuration,
+                CategoryName = Workout.Category.CategoryName
+            };
+
+            if (Workout == null)
             {
                 return NotFound();
             }
 
-            return Ok(workout);
+            return Ok(Workout);
         }
 
-        // PUT: api/WorkoutData/5
+        // POST: api/WorkoutData/UpdateWorkout/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutWorkout(int id, Workout workout)
+        [HttpPost]
+        public IHttpActionResult UpdateWorkout(int id, Workout Workout)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != workout.WorkoutId)
+            if (id != Workout.WorkoutId)
             {
                 return BadRequest();
             }
 
-            db.Entry(workout).State = EntityState.Modified;
+            db.Entry(Workout).State = EntityState.Modified;
 
             try
             {
@@ -70,35 +94,38 @@ namespace FitnessApp.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/WorkoutData
+        // POST: api/WorkoutData/AddWorkout
         [ResponseType(typeof(Workout))]
-        public IHttpActionResult PostWorkout(Workout workout)
+        [HttpPost]
+        public IHttpActionResult AddWorkout(Workout Workout)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Workouts.Add(workout);
+            db.Workouts.Add(Workout);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = workout.WorkoutId }, workout);
+            return CreatedAtRoute("DefaultApi", new { id = Workout.WorkoutId }, Workout);
         }
 
-        // DELETE: api/WorkoutData/5
+        //POST
+        // DELETE: api/WorkoutData/DeleteWorkout/5
         [ResponseType(typeof(Workout))]
+        [HttpPost]
         public IHttpActionResult DeleteWorkout(int id)
         {
-            Workout workout = db.Workouts.Find(id);
-            if (workout == null)
+            Workout Workout = db.Workouts.Find(id);
+            if (Workout == null)
             {
                 return NotFound();
             }
 
-            db.Workouts.Remove(workout);
+            db.Workouts.Remove(Workout);
             db.SaveChanges();
 
-            return Ok(workout);
+            return Ok(Workout);
         }
 
         protected override void Dispose(bool disposing)
