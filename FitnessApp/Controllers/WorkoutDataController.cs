@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using FitnessApp.Models;
+using System.Diagnostics;
 
 namespace FitnessApp.Controllers
 {
@@ -43,8 +44,17 @@ namespace FitnessApp.Controllers
 
             return WorkoutDtos;
         }
-
-        // GET: api/WorkoutData/FindWorkout/5
+        /// <summary>
+        /// Provides workout information in the system related to category id
+        /// </summary>
+        /// <returns>
+        /// CONTENT: all workout in the database, including their categories.
+        /// </returns>
+        /// <param name="id">workout Id
+        /// </param>
+        /// <example>
+        /// GET: api/WorkoutData/FindWorkout/5
+        /// </example>
         [ResponseType(typeof(Workout))]
         [HttpGet]
         public IHttpActionResult FindWorkout(int id)
@@ -72,13 +82,21 @@ namespace FitnessApp.Controllers
         [HttpPost]
         public IHttpActionResult UpdateWorkout(int id, Workout Workout)
         {
+            Debug.WriteLine("Update Workout Reached");
             if (!ModelState.IsValid)
             {
+                Debug.WriteLine("Invalid Model State");
                 return BadRequest(ModelState);
             }
 
             if (id != Workout.WorkoutId)
             {
+                Debug.WriteLine("Unmatched WorkoutId");
+                Debug.WriteLine("GET Paramater " +id);
+                Debug.WriteLine("POST Paramater " + Workout.WorkoutId);
+                Debug.WriteLine("POST Paramater " + Workout.WorkoutName);
+                Debug.WriteLine("POST Paramater " + Workout.WorkoutDuration);
+                Debug.WriteLine("POST Paramater " + Workout.WorkoutDate);
                 return BadRequest();
             }
 
@@ -92,6 +110,7 @@ namespace FitnessApp.Controllers
             {
                 if (!WorkoutExists(id))
                 {
+                    Debug.WriteLine("Workout not found");
                     return NotFound();
                 }
                 else
@@ -100,6 +119,7 @@ namespace FitnessApp.Controllers
                 }
             }
 
+            Debug.WriteLine("No trigger or errors");
             return StatusCode(HttpStatusCode.NoContent);
         }
 
