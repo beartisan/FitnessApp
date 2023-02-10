@@ -50,10 +50,9 @@ namespace FitnessApp.Controllers
         /// <returns>
         /// CONTENT: all workout in the database, including their categories.
         /// </returns>
-        /// <param name="id">workout Id
-        /// </param>
+        /// <param name="id">workout Id</param>
         /// <example>
-        /// GET: api/WorkoutData/FindWorkout/5
+        /// GET: https://localhost:44376/api/WorkoutData/FindWorkout/5
         /// </example>
         [ResponseType(typeof(Workout))]
         [HttpGet]
@@ -77,7 +76,20 @@ namespace FitnessApp.Controllers
             return Ok(Workout);
         }
 
-        // POST: api/WorkoutData/UpdateWorkout/5
+        /// <summary>
+        /// updates a specific workout in the system through POST request input
+        /// </summary>
+        /// <param name="id">synonymous to the primary key of workoutId</param>
+        /// <param name="Workout">JSON data format</param>
+        /// <returns></returns>
+        /// <example>
+        /// POST: api/WorkoutData/UpdateWorkout/5
+        /// In the terminal ::
+        /// curl -d @workout.json -H "content-type: application/json" "https://localhost:44376/api/workoutdata/updateworkout/5"
+        /// curl -d https://localhost:44376/api/workoutdata/updateworkout/5
+        /// Form Data: Workout JSON Object
+        /// </example> 
+
         [ResponseType(typeof(void))]
         [HttpPost]
         public IHttpActionResult UpdateWorkout(int id, Workout Workout)
@@ -123,7 +135,16 @@ namespace FitnessApp.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/WorkoutData/AddWorkout
+        /// <summary>
+        /// adds a workout to the database
+        /// </summary>
+        /// <param name="Workout">JSON format of workout</param>
+        /// <returns>
+        /// WorkoutId, WorkoutName, WorkoutDate, WorkoutDuration, CategoryName
+        /// </returns>
+        /// Form Data: Workout JSON Object
+        /// POST: api/WorkoutData/AddWorkout
+        
         [ResponseType(typeof(Workout))]
         [HttpPost]
         public IHttpActionResult AddWorkout(Workout Workout)
@@ -139,8 +160,16 @@ namespace FitnessApp.Controllers
             return CreatedAtRoute("DefaultApi", new { id = Workout.WorkoutId }, Workout);
         }
 
-        //POST
-        // DELETE: api/WorkoutData/DeleteWorkout/5
+        /// <summary>
+        /// deletes a workout from the system by inputing its workoutId
+        /// </summary>
+        /// <param name="id">Id is the Primary key of workout</param>
+        /// <returns> Header: 200(Okay) or Header: 404(not found) </returns>
+        /// <example>
+        /// POST (Delete): api/WorkoutData/DeleteWorkout/5
+        /// Form Data: [empty]
+        /// </example>
+    
         [ResponseType(typeof(Workout))]
         [HttpPost]
         public IHttpActionResult DeleteWorkout(int id)
