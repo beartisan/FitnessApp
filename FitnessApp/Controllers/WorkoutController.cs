@@ -11,6 +11,13 @@ namespace FitnessApp.Controllers
 {
     public class WorkoutController : Controller
     {
+        private static readonly HttpClient client;
+        static WorkoutController()
+        {
+            client = new HttpClient();
+            client.BaseAddress = new Uri("https://localhost:44376/api/workoutdata/");
+        }
+        
         // GET: Workout/List
         public ActionResult List()
         {
@@ -18,18 +25,19 @@ namespace FitnessApp.Controllers
             //curl https://localhost:44376/api/workoutdata/workoutlist
 
             //client is anything that is accessing info in the server, and can also exist in the server to send a request to our data access API and anticipate a response
-            HttpClient client = new HttpClient() { };
+                //HttpClient client = new HttpClient() { };
+
             //establish URL communication endpoint
-            string url = "https://localhost:44376/api/workoutdata/workoutlist";
+            string url = "workoutlist";
             HttpResponseMessage response = client.GetAsync(url).Result;
 
-            Debug.WriteLine("The request is ");
-            Debug.WriteLine(response.StatusCode);
+            //Debug.WriteLine("The request is ");
+            //Debug.WriteLine(response.StatusCode);
 
             //parse message into IEnumerable
             IEnumerable<WorkoutDto> Workouts = response.Content.ReadAsAsync<IEnumerable<WorkoutDto>>().Result;
-            Debug.WriteLine("Number of workouts are : ");
-            Debug.WriteLine(Workouts.Count());
+            //Debug.WriteLine("Number of workouts are : ");
+            //Debug.WriteLine(Workouts.Count());
 
 
             return View(Workouts);
@@ -41,9 +49,9 @@ namespace FitnessApp.Controllers
             //objective: communicate with our workout data api to retrieve a workout
             //curl https://localhost:44376/api/workoutdata/findworkout/{id}
 
-            HttpClient client = new HttpClient() { };
+                //HttpClient client = new HttpClient() { };
             //establish URL communication endpoint
-            string url = "https://localhost:44376/api/workoutdata/findworkout/"+id;
+            string url = "findworkout/"+id;
             HttpResponseMessage response = client.GetAsync(url).Result;
 
             Debug.WriteLine("The request is ");
@@ -57,26 +65,20 @@ namespace FitnessApp.Controllers
             return View(selectedWorkout);
         }
 
-        // GET: Workout/Create
-        public ActionResult Create()
+        // GET: Workout/New
+        public ActionResult New()
         {
             return View();
         }
 
         // POST: Workout/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Workout workout)
         {
-            try
-            {
-                // TODO: Add insert logic here
+            Debug.WriteLine("Inputted workout is: ");
+            Debug.WriteLine(workout.WorkoutName);
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("List");
         }
 
         // GET: Workout/Edit/5
