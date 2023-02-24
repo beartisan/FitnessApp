@@ -72,8 +72,13 @@ namespace FitnessApp.Controllers
             {
                 return NotFound();
             }
+            if (Workout.Category == null)
+            {
+                return BadRequest("Category is not found");
+                Debug.WriteLine("Category is not found");
+            }
 
-            return Ok(Workout);
+            return Ok(WorkoutDto);
         }
 
         /// <summary>

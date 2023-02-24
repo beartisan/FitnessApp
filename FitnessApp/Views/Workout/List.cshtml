@@ -7,7 +7,7 @@
 <h2>List</h2>
 @foreach (var Workout in Model)
 {
-    <h2>@Workout.WorkoutName</h2>
+    <h2><a href="/Workout/Details/@Workout.WorkoutId">@Workout.WorkoutName</a></h2>
     <div>Date: @Workout.WorkoutDate.Date </div>
     <div>Timer: @Workout.WorkoutDuration minutes</div>
     <div>Category: @Workout.CategoryName</div>
