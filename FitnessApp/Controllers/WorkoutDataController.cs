@@ -65,17 +65,14 @@ namespace FitnessApp.Controllers
                 WorkoutName = Workout.WorkoutName,
                 WorkoutDate = Workout.WorkoutDate,
                 WorkoutDuration = Workout.WorkoutDuration,
-                CategoryName = Workout.Category.CategoryName
+                CategoryId = Workout.CategoryId,
+                CategoryName = Workout.Category.CategoryName //,
+ //               AthletesId = Workout.Athletes.AthletesId
             };
 
             if (Workout == null)
             {
                 return NotFound();
-            }
-            if (Workout.Category == null)
-            {
-                return BadRequest("Category is not found");
-                Debug.WriteLine("Category is not found");
             }
 
             return Ok(WorkoutDto);
@@ -145,24 +142,24 @@ namespace FitnessApp.Controllers
         /// </summary>
         /// <param name="Workout">JSON format of workout</param>
         /// <returns>
-        /// WorkoutId, WorkoutName, WorkoutDate, WorkoutDuration, CategoryName
+        /// WorkoutId, WorkoutName, WorkoutDate, WorkoutDuration, CategoryId, CategoryName
         /// </returns>
         /// Form Data: Workout JSON Object
         /// POST: api/WorkoutData/AddWorkout
         
         [ResponseType(typeof(Workout))]
         [HttpPost]
-        public IHttpActionResult AddWorkout(Workout Workout)
+        public IHttpActionResult AddWorkout(Workout workout)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Workouts.Add(Workout);
+            db.Workouts.Add(workout);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = Workout.WorkoutId }, Workout);
+            return CreatedAtRoute("DefaultApi", new { id = workout.WorkoutId }, workout);
         }
 
         /// <summary>
