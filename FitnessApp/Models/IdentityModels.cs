@@ -37,5 +37,7 @@ namespace FitnessApp.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<FitnessApp.Models.Athlete> Athletes { get; set; }
     }
 }
