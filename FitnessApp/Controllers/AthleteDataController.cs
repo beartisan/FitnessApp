@@ -9,22 +9,35 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using FitnessApp.Models;
+using System.Diagnostics;
 
 namespace FitnessApp.Controllers
 {
-    public class AthletesDataController : ApiController
+    public class AthleteDataController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: api/AthletesData
-        public IQueryable<Athlete> GetAthletes()
+        // GET: api/AthleteData
+        [HttpGet]
+        [ResponseType(typeof(AthleteDto))]
+        public IHttpActionResult ListAthletes()
         {
-            return db.Athletes;
+            List<Athlete> Athletes = db.Athletes.ToList();
+            List<AthleteDto> AthleteDtos = new List<AthleteDto>();
+
+            Athletes.ForEach(a => AthleteDtos.Add(new AthleteDto()));
+            {
+                AthleteId = a.athleteId,
+                AthleteFirstName = a.AthleteFirstName,
+                AthleteLastName = a.AtheleteLastName
+            }
+
+            return Ok(AthleteDtos);
         }
 
-        // GET: api/AthletesData/5
+        // GET: api/AthleteData/FindAthelete/5
         [ResponseType(typeof(Athlete))]
-        public IHttpActionResult GetAthlete(int id)
+        public IHttpActionResult FindAthlete(int id)
         {
             Athlete athlete = db.Athletes.Find(id);
             if (athlete == null)
@@ -35,9 +48,10 @@ namespace FitnessApp.Controllers
             return Ok(athlete);
         }
 
-        // PUT: api/AthletesData/5
+        // POST: api/AthleteData/UpdateAthlete/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutAthlete(int id, Athlete athlete)
+        [HttpPost]
+        public IHttpActionResult UpdateAthlete(int id, Athlete athlete)
         {
             if (!ModelState.IsValid)
             {
@@ -70,9 +84,10 @@ namespace FitnessApp.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/AthletesData
+        // POST: api/AthleteData/AddAthlete
         [ResponseType(typeof(Athlete))]
-        public IHttpActionResult PostAthlete(Athlete athlete)
+        [HttpPost]
+        public IHttpActionResult AddAthlete(Athlete athlete)
         {
             if (!ModelState.IsValid)
             {
@@ -85,8 +100,9 @@ namespace FitnessApp.Controllers
             return CreatedAtRoute("DefaultApi", new { id = athlete.AthleteId }, athlete);
         }
 
-        // DELETE: api/AthletesData/5
+        // DELETE: api/AthleteData/DeleteAthlete/5
         [ResponseType(typeof(Athlete))]
+        [HttpPost]
         public IHttpActionResult DeleteAthlete(int id)
         {
             Athlete athlete = db.Athletes.Find(id);

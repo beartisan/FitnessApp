@@ -18,7 +18,13 @@ namespace FitnessApp.Models
         //athlete can have a lot of workouts
         public ICollection<Workout> Workouts { get; set; }
 
+    }
+    public class AthleteDto
+    {
+        public int AthleteId { get; set; }
 
+        public string AthleteFirstName { get; set; }
 
+        public string AthleteLastName { get; set; }
     }
 }
