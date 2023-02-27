@@ -8,10 +8,10 @@
 
     <h2><a href="/Workout/List">No, Take me Back.</a></h2>
 
-    @*<h2>@Model.WorkoutName</h2>
+    <h2>@Model.WorkoutName</h2>
     <div>Date: @Model.WorkoutDate </div>
     <div>Duration: @Model.WorkoutDuration minutes</div>
-    <div>Category Name: @Model.CategoryName</div>*@
+    <div>Category Name: @Model.CategoryName</div>
 
 <form action="/Workout/Delete/@Model.WorkoutId" method="POST">
     <input type="submit" value="Yes, Confirm Delete" />

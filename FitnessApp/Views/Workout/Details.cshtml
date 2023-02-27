@@ -1,4 +1,4 @@
-﻿@model FitnessApp.Models.WorkoutDto
+﻿@model FitnessApp.Models.ViewModels.DetailsWorkout
 
 @{
     ViewBag.Title = "View";
@@ -7,8 +7,38 @@
 <h2>Show Workout</h2>
 
 <a href="/Workout/List">Go back to Workout List</a>
+<br />
 
-<h3>@Model.WorkoutName</h3>
-<div>Date: @Model.WorkoutDate</div>
-<div>Duration: @Model.WorkoutDuration minutes</div>
-<div>Category: @Model.CategoryName</div>
+<a href="/Workout/Edit/@Model.SelectedWorkout.WorkoutId" style="color: #0094ff;">Update Workout</a>
+<br />
+
+<a href="/Athlete/DeleteConfirm/@Model.SelectedWorkout.WorkoutId" style="color: #d92929;"> Delete Workout </a>
+
+    <h3>@Model.WorkoutName</h3>
+    <div>Date: @Model.WorkoutDate</div>
+    <div>Duration: @Model.WorkoutDuration minutes</div>
+    <div>Category: @Model.CategoryName</div>
+
+<div class="athlete-container">
+    <h3>Associated Athletes for @Model.SelectedWorkout.WorkoutName:</h3>
+    @foreach(var athlete in Model.AssociatedAthletes)
+            {
+                @*regarding workout controller and athlete controller*@
+
+                <a href="/athlete/details/@athlete.athleteId">@athlete.atheteFirstName @athlete.athleteLastName</a>
+                <a style="color: #ff0000;" href="/athlete/unassociated.@Model.SelectedWorkout.WorkoutId?AthleteId=@athlete.AthleteId">[x]</a>
+                <br />
+            }
+    <div>
+        <h3>Add new Athlete to this workout @Model.SelectedWorkout.WorkoutName</h3>
+        <form action="/workout/associate/@Model.SelectedWorkout.WorkoutId" method="POST">
+            <select name="AthleteId">
+               @foreach (var athlete in Model.GivenAthletes)
+                {
+                    <option value="@athlete.athleteId">@athlete.atheteFirstName @athlete.athleteLastName</option>
+                }
+            </select>
+            <input type="submit" value="Add This Athlete"/>
+        </form>
+    </div>
+</div>
