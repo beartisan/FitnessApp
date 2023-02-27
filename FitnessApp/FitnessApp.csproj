@@ -211,6 +211,10 @@
     <Compile Include="Migrations\202302100426133_athletes-workouts.designer.cs">
       <DependentUpon>202302100426133_athletes-workouts.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202302272005181_latestmigration.cs" />
+    <Compile Include="Migrations\202302272005181_latestmigration.designer.cs">
+      <DependentUpon>202302272005181_latestmigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Athlete.cs" />
@@ -315,6 +319,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202302100426133_athletes-workouts.resx">
       <DependentUpon>202302100426133_athletes-workouts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202302272005181_latestmigration.resx">
+      <DependentUpon>202302272005181_latestmigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

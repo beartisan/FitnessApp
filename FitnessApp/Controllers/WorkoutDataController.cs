@@ -28,7 +28,7 @@ namespace FitnessApp.Controllers
         /// </example>
        
         [HttpGet]
-        public IEnumerable<WorkoutDto> WorkoutList()
+        public IHttpActionResult WorkoutList()
         {
             List<Workout> Workouts = db.Workouts.ToList();
             List<WorkoutDto> WorkoutDtos = new List<WorkoutDto>();
@@ -42,7 +42,7 @@ namespace FitnessApp.Controllers
                 CategoryName = w.Category.CategoryName
             }));
 
-            return WorkoutDtos;
+            return Ok(WorkoutDtos);
         }
         /// <summary>
         /// Provides workout information in the system related to category id
