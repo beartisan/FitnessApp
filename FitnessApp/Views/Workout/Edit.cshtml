@@ -1,0 +1,39 @@
+﻿@model FitnessApp.Models.ViewModels.UpdateWorkout
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Update Workout</h2>
+<form action="/workout/update/@Model.SelectedWorkout.WorkoutId" method="post">
+    <div style="display:none;">
+        @*Pass through workout Id*@
+        <input type="text" name="WorkoutId" value="@Model.SelectedWorkout.WorkoutId" />
+    </div>
+    <div>
+        <label>Workout Name: </label>
+        <input type="text" name="WorkoutName" value="@Model.SelectedWorkout.WorkoutName" />
+    </div>
+
+    <div>
+        <label>Workout Date: </label>
+        <input type="date" name="WorkoutDate" value="@Model.SelectedWorkout.WorkoutDate" />
+    </div>
+    <div>
+        <label>Workout Duration (mins): </label>
+        <input type="text" name="WorkoutDuration" value="@Model.SelectedWorkout.WorkoutDuration" />
+    </div>
+    <div>
+        <label>Workout Category : </label>
+        <select name="CategoryId">
+            @foreach(var category in Model.CategoryOptions)
+            {
+                <option value="@category.CategoryId">@category.categoryName</option>
+            }
+        </select>
+    </div>
+
+    <div>
+        <input type="submit" value="Update Workout" />
+    </div>
+</form>

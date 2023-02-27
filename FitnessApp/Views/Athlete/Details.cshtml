@@ -17,9 +17,10 @@
 
 <div class="workout-container">
     <h3>Workout Lists:</h3>
-    @foreach(var workout in Model.KeptWorkouts)
-            {
-                <a href="/workout/details/@workout.WorkoutId">@workout.WorkoutName</a>
-                <br />
-            }
+    @*referencing athletecontroller*@
+    @foreach (var workout in Model.KeptWorkouts)
+    {
+        <a href="/workout/details/@workout.WorkoutId">@workout.WorkoutName</a>
+        <br />
+    }
 </div>

@@ -1,0 +1,23 @@
+﻿@model FitnessApp.Models.CategoriesDto
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Update Category</h2>
+
+<form action="/category/update/@Model.CategoryId" method="post">
+    <div style="display:none;">
+        @*Pass through Category Id*@
+        <input type="text" name="CategoryId" value="@Model.CategoryId" />
+    </div>
+    <div>
+        <label>Category Name: </label>
+        <input type="text" name="CategoryFirstName" value="@Model.CategoryName" />
+    </div>
+
+
+    <div>
+        <input type="submit" value="Update Category" />
+    </div>
+</form>

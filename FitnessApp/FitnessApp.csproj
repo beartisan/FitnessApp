@@ -294,10 +294,15 @@
     <Content Include="Views\Athlete\List.cshtml" />
     <Content Include="Views\Athlete\Details.cshtml" />
     <Content Include="Views\Athlete\DeleteConfirm.cshtml" />
+    <Content Include="Views\Category\List.cshtml" />
+    <Content Include="Views\Athlete\Error.cshtml" />
+    <Content Include="Views\Category\Error.cshtml" />
+    <Content Include="Views\Workout\Edit.cshtml" />
+    <Content Include="Views\Athlete\Edit.cshtml" />
+    <Content Include="Views\Category\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Category\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
