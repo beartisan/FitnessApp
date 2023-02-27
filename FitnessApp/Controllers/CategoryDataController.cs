@@ -16,15 +16,15 @@ namespace FitnessApp.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: api/CategoryData
-        public IQueryable<Category> GetCategories()
+        // GET: api/CategoryData/ListCategories
+        public IQueryable<Category> ListCategories()
         {
             return db.Categories;
         }
 
-        // GET: api/CategoryData/5
+        // GET: api/CategoryData/FindCategory/5
         [ResponseType(typeof(Category))]
-        public IHttpActionResult GetCategory(int id)
+        public IHttpActionResult FindCategory(int id)
         {
             Category category = db.Categories.Find(id);
             if (category == null)
@@ -35,9 +35,10 @@ namespace FitnessApp.Controllers
             return Ok(category);
         }
 
-        // PUT: api/CategoryData/5
+        // POST: api/CategoryData/UpdateCategory/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutCategory(int id, Category category)
+        [HttpPost]
+        public IHttpActionResult UpdateCategory(int id, Category category)
         {
             if (!ModelState.IsValid)
             {
@@ -70,7 +71,8 @@ namespace FitnessApp.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/CategoryData
+        // POST: api/CategoryData/AddCategory
+        [HttpPost]
         [ResponseType(typeof(Category))]
         public IHttpActionResult PostCategory(Category category)
         {
@@ -85,8 +87,9 @@ namespace FitnessApp.Controllers
             return CreatedAtRoute("DefaultApi", new { id = category.CategoryId }, category);
         }
 
-        // DELETE: api/CategoryData/5
+        // POST: DELETE: api/CategoryData/DeleteCategory/5
         [ResponseType(typeof(Category))]
+        [HttpPost]
         public IHttpActionResult DeleteCategory(int id)
         {
             Category category = db.Categories.Find(id);
