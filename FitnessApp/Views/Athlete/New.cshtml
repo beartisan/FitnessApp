@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create New Athlete</h2>
+
+
+<form action="/athlete/create" method="post">
+    <div>
+        <label>First Name: </label>
+        <input type="text" name="AthleteFirstName" value="First Name" />
+    </div>
+
+    <div>
+        <label>Last Name: </label>
+        <input type="text" name="AthleteLastName" value="Last Name" />
+    </div>
+
+    <div>
+        <input type="submit" value="Add Athlete" />
+    </div>
+</form>

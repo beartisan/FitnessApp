@@ -1,0 +1,26 @@
+﻿@model FitnessApp.Models.ViewModels.DetailsCategory
+
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>Category Details:</h2>
+
+<a href="/Category/List">Back to Category List</a>
+<br />
+
+<a href="/Category/Edit/@Model.SelectedCategory.CategoryId" style="color: #0094ff;">Update Category</a>
+<br />
+
+<a href="/Category/DeleteConfirm/@Model.SelectedCategory.CategoryId" style="color: #d92929;"> Delete Category </a>
+<h2>@Model.SelectedCategory.CategoryName</h2>
+
+<div style="margin-top: 90px;">
+    <h3>Workout Related to this Category:</h3>
+
+    @foreach (var workout in Model.RelatedWorkouts)
+    {
+        <a href="/workout/details/@workout.WorkoutId">@workout.WorkoutName</a>
+        <br />
+    }
+</div>

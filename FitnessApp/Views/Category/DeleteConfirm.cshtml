@@ -1,0 +1,15 @@
+﻿@model FitnessApp.Models.CategoriesDto
+
+@{
+    ViewBag.Title = "DeleteConfirm";
+}
+
+<h2>Are you sure you want to delete this Category?</h2>
+
+<h2><a href="/Category/List">No, Take me Back.</a></h2>
+
+<h4>Category: @Model.CategoryName </h4>
+
+<form action="/Category/Delete/@Model.CategoryId" method="POST">
+    <input type="submit" value="Yes, Confirm Delete" />
+</form>
