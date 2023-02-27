@@ -14,5 +14,15 @@ namespace FitnessApp.Models
 
         public string CategoryName { get; set; }
 
+        internal static void ForEach(Action<object> value)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class CategoriesDto
+    {
+        public int CategoryId { get; set; }
+
+        public string CategoryName { get; set; }
     }
 }

@@ -186,6 +186,7 @@
     <Compile Include="Controllers\AthleteDataController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CategoryDataController.cs" />
+    <Compile Include="Controllers\CategoryDto.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\WorkoutController.cs" />
