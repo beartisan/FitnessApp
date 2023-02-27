@@ -112,9 +112,14 @@ namespace FitnessApp.Controllers
             string url = "workoutdata/" + id;
 
             HttpResponseMessage response = client.GetAsync(url).Result;
-            WorkoutDto selectedworkout = response.Content.ReadAsAsync<WorkoutDto>().Result;
+            WorkoutDto selectedWorkout = response.Content.ReadAsAsync<WorkoutDto>().Result;
 
-            return View(selectedworkout);
+            return View(selectedWorkout);
+        }
+
+        public ActionResult Error()
+        {
+            return View();
         }
 
         // POST: Workout/Update/5
