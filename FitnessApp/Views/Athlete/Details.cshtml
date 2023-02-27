@@ -1,0 +1,25 @@
+﻿@model FitnessApp.Models.ViewModels.DetailsAthlete
+
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>Athlete Workout Details:</h2>
+
+<a href="/Athlete/List">Back to List of Athletes</a>
+<br />
+
+<a href="/Athlete/Edit/@Model.SelectedAthlete.AthleteId" style="color: #0094ff;">Update Athlete</a>
+<br />
+
+<a href="/Athlete/DeleteConfirm/@Model.SelectedAthlete.AthleteId" style="color: #d92929;"> Delete Athlete </a>
+<h2>@Model.SelectedAthlete.AthleteFirstName @Model.SelectedAthlete.AthleteLastName</h2>
+
+<div class="workout-container">
+    <h3>Workout Lists:</h3>
+    @foreach(var workout in Model.KeptWorkouts)
+            {
+                <a href="/workout/details/@workout.WorkoutId">@workout.WorkoutName</a>
+                <br />
+            }
+</div>

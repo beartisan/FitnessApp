@@ -1,0 +1,12 @@
+﻿@model IEnumerable<FitnessApp.Models.AthleteDto>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List of Athletes</h2>
+@foreach (var Athlete in Model)
+{
+    <h2><a href="/Athlete/Details/@Athlete.AthleteId">@Athlete.AthleteLastName, @Athlete.AthleteFirstName</a></h2>
+ 
+}

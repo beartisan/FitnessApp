@@ -289,10 +289,14 @@
     <Content Include="Views\Workout\List.cshtml" />
     <Content Include="Views\Workout\Details.cshtml" />
     <Content Include="Views\Workout\New.cshtml" />
+    <Content Include="Views\Workout\Error.cshtml" />
+    <Content Include="Views\Workout\DeleteConfirm.cshtml" />
+    <Content Include="Views\Athlete\List.cshtml" />
+    <Content Include="Views\Athlete\Details.cshtml" />
+    <Content Include="Views\Athlete\DeleteConfirm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Athlete\" />
     <Folder Include="Views\Category\" />
   </ItemGroup>
   <ItemGroup>

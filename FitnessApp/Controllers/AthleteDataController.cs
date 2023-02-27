@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using FitnessApp.Models;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 
 namespace FitnessApp.Controllers
 {
@@ -148,10 +149,117 @@ namespace FitnessApp.Controllers
         /// <param name="id">Represents the primary key of Athlete ID</param>
         /// <param name="athlete">JSON Form data of an athlete</param>
         /// <example>
-        /// GET: api/AthleteData/FindAthlete/2
+        /// GET: api/AthleteData/UpdateAthlete/2
         /// </example>
-        [ResponseType(typeof(AthleteDto))]
+        [ResponseType(typeof(void))]
         [HttpGet]
+
+        public IHttpActionResult UpdateAthlete(int id, Athlete Athlete)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if(id != Athlete.AthleteId)
+            {
+                return BadRequest();
+            }
+            db.Entry(Athlete).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if(!AthleteExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        /// <summary>
+        /// Adds an athlete into the system
+        /// </summary>
+        /// <returns>
+        /// Header: 201(Created)
+        /// Content: AthleteID, AthleteFirstName, AthleteLastName
+        /// or
+        /// Header: 400 (Bad Request)
+        /// </returns>
+        /// <param name="athlete">JSON form data of an Athlete </param>
+        /// <example>
+        /// POST: api/AthleteData/AddAthlete
+        /// FORM DATA: Athlete JSON Object
+        /// </example>
+        [ResponseType(typeof(Athlete))]
+        [HttpPost]
+        public IHttpActionResult AddAthlete(Athlete Athlete)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            //show this
+            db.Athletes.Add(Athlete);
+            db.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = Athlete.AthleteId }, Athlete);
+        }
+
+        /// <summary>
+        /// Removes an athlete into the system through their athleteID
+        /// </summary>
+        /// <returns>
+        /// Header: 200(Ok)
+        /// or
+        /// Header: 404 (Not Found)
+        /// </returns>
+        /// <param name="id">Primary Key of the Athlete </param>
+        /// <example>
+        /// POST: api/AthleteData/DeleteAthlete/2
+        /// FORM DATA: (empty)
+        /// </example>
+        [ResponseType(typeof(Athlete))]
+        [HttpPost]
+        public IHttpActionResult DeleteAthlete(int id)
+        {
+            Athlete Athlete = db.Athletes.Find(id);
+            if (Athlete == null)
+            {
+                return NotFound();
+            }
+
+            //show this
+            db.Athletes.Remove(Athlete);
+            db.SaveChanges();
+
+            return Ok();
+        }
+
+        //protect
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+
+            base.Dispose(disposing);
+        }
+
+        private bool AthleteExists(int id)
+        {
+            return db.Athletes.Count(ex => ex.AthleteId == id) > 0;
+        }
 
     }
 }
