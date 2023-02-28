@@ -122,14 +122,14 @@ namespace FitnessApp.Controllers
         /// <param name="workoutId">Workout ID</param>
         /// <param name="athleteId">Athlete ID</param>
         /// <example>
-        /// GET: api/workoutdata/associateworkoutwithathlete/{workoutId}/{athleteId}
-        ///      api/workoutdata/associateworkoutwithathlete/1/2
+        /// GET: api/workoutdata/associatedworkoutwithathlete/{workoutId}/{athleteId}
+        ///      api/workoutdata/associatedworkoutwithathlete/1/2
         /// </example>
 
         [HttpPost]
-        [Route("api/workoutdata/associateworkoutwithathlete/{workoutId}/{athleteId}")]
+        [Route("api/workoutdata/associatedworkoutwithathlete/{workoutId}/{athleteId}")]
         [Authorize]
-        public IHttpActionResult AssociateWorkoutWithAthlete(int WorkoutId, int AthleteId)
+        public IHttpActionResult AssociatedWorkoutWithAthlete(int WorkoutId, int AthleteId)
         {
            
             Workout SelectedWorkout = db.Workouts.Include(
@@ -159,14 +159,14 @@ namespace FitnessApp.Controllers
         /// <param name="workoutId">Workout ID primary key</param>
         /// <param name="athleteId">Athlete ID primary key</param>
         /// <example>
-        /// GET: api/workoutdata/unassociateworkoutwithathlete/{workoutId}/{athleteId}
-        ///      api/workoutdata/unassociateworkoutwithathlete/1/1
+        /// GET: api/workoutdata/unassociatedworkoutwithathlete/{workoutId}/{athleteId}
+        ///      api/workoutdata/unassociatedworkoutwithathlete/1/1
         /// </example>
 
         [HttpPost]
-        [Route("api/workoutdata/unassociateworkoutwithathlete/{workoutId}/{athleteId}")]
+        [Route("api/workoutdata/unassociatedworkoutwithathlete/{workoutId}/{athleteId}")]
         [Authorize]
-        public IHttpActionResult UnssociateWorkoutWithAthlete(int WorkoutId, int AthleteId)
+        public IHttpActionResult UnssociatedWorkoutWithAthlete(int WorkoutId, int AthleteId)
         {
 
             Workout SelectedWorkout = db.Workouts.Include(w => w.Athletes).Where( w => w.WorkoutId == WorkoutId).FirstOrDefault();

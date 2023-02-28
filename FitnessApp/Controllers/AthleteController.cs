@@ -26,9 +26,9 @@ namespace FitnessApp.Controllers
             public ActionResult Index()
         {
             //objective: communicate with our athlete data api to retrieve a list of athletes
-            //curl https://localhost:44376/api/athletedata/athletelist
+            //curl https://localhost:44376/api/athletedata/listathletes
 
-            string url = "athletedata/athletelist";
+            string url = "athletedata/listathletes";
             HttpResponseMessage response = client.GetAsync(url).Result;
 
             IEnumerable<AthleteDto> Athletes = response.Content.ReadAsAsync<IEnumerable<AthleteDto>>().Result;
@@ -113,7 +113,7 @@ namespace FitnessApp.Controllers
         public ActionResult Update(int id, Athlete Athlete)
         {
             //objective: communicate with our athlete data api to retrieve one athlete
-            //curl https://localhost:44376/api/athletedata/updateathlete/{id}
+            //curl -H "Content-Type: application/json" -d @Athlete.json https://localhost:44376/api/athletedata/updateathlete/{id}
 
             AthleteDetails ViewModel = new AthleteDetails();
 
@@ -135,9 +135,9 @@ namespace FitnessApp.Controllers
         }
 
         // GET: Athlete/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult DeleteConfirm(int id)
         {
-            string url = "athletedata/findAthlete/" + id;
+            string url = "athletedata/findathlete/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
             AthleteDto SelectedAthlete = response.Content.ReadAsAsync<AthleteDto>().Result;
 
@@ -146,14 +146,12 @@ namespace FitnessApp.Controllers
 
         // POST: Athlete/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, Athlete Athlete)
+        public ActionResult Delete(int id)
         {
             //objective: delete the Athlete through API using their AthleteID
             ///curl -H "Content-Type: application/json" -d @Athlete.json https://localhost:44376/api/athletedata/deleteathlete/{id}
 
-            AthleteDetails ViewModel = new AthleteDetails();
-
-            string url = "Athletedata/deleteathlete/" + id;
+            string url = "athletedata/deleteathlete/" + id;
 
             HttpContent content = new StringContent("");
 
