@@ -8,7 +8,7 @@ using System.Diagnostics;
 using FitnessApp.Models;
 using FitnessApp.Models.ViewModels;
 using System.Web.Script.Serialization;
-using FitnessApp.Migrations;
+//using FitnessApp.Migrations;
 
 
 namespace FitnessApp.Controllers
@@ -167,8 +167,10 @@ namespace FitnessApp.Controllers
 
         // POST: Workout/Create
         [HttpPost]
+        [Authorize]
         public ActionResult Create(Workout workout)
         {
+            GetApplicationCookie();
             //Debug.WriteLine("Inputted workout is: ");
             //Debug.WriteLine(workout.WorkoutName);
 
@@ -226,18 +228,33 @@ namespace FitnessApp.Controllers
 
         // POST: Workout/Update/5
         [HttpPost]
+        [Authorize]
         public ActionResult Edit(int id, Workout workout)
         {
-            try
-            {
-                // TODO: Add update logic here
+            GetApplicationCookie();
+            //Debug.WriteLine("Inputted workout is: ");
+            //Debug.WriteLine(workout.WorkoutName);
 
-                return RedirectToAction("Index");
-            }
-            catch
+            //update  workout into the system through API
+            //curl -H "Content-Type: application/json" -d @workout.json https://localhost:44376/api/workoutdata/addworkout
+            string url = "workoutdata/updateworkout/" + id;
+
+            JavaScriptSerializer jss = new JavaScriptSerializer();
+            string jsonpayload = jss.Serialize(workout); 
+
+            HttpContent content = new StringContent(jsonpayload);
+            content.Headers.ContentType.MediaType = "application/json";
+
+            HttpResponseMessage response = client.PostAsync(url, content).Result;
+            if (response.IsSuccessStatusCode)
             {
-                return View();
+                return RedirectToAction("List");
             }
+            else
+            {
+                return RedirectToAction("Error");
+            }
+
         }
 
         // GET: Workout/Delete/5
