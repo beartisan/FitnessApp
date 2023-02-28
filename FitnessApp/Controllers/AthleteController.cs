@@ -23,12 +23,12 @@ namespace FitnessApp.Controllers
         }
    
             // GET: Athlete/List
-            public ActionResult Index()
+            public ActionResult List()
         {
-            //objective: communicate with our athlete data api to retrieve a list of athletes
-            //curl https://localhost:44376/api/athletedata/listathletes
+            //objective: communicate with our Athlete data api to retrieve a list of Athletes
+            //curl https://localhost:44376/api/Athletedata/listAthletes
 
-            string url = "athletedata/listathletes";
+            string url = "Athletedata/listAthletes";
             HttpResponseMessage response = client.GetAsync(url).Result;
 
             IEnumerable<AthleteDto> Athletes = response.Content.ReadAsAsync<IEnumerable<AthleteDto>>().Result;
@@ -41,17 +41,17 @@ namespace FitnessApp.Controllers
         {
             AthleteDetails ViewModel = new AthleteDetails();
 
-            //objective: communicate with our athlete data api to retrieve one athlete
-            //curl https://localhost:44376/api/athletedata/findAthlete/{id}
+            //objective: communicate with our Athlete data api to retrieve one Athlete
+            //curl https://localhost:44376/api/Athletedata/findAthlete/{id}
 
-            string url = "athletedata/findathlete/" + id;
+            string url = "Athletedata/findAthlete/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
 
             AthleteDto SelectedAthlete = response.Content.ReadAsAsync<AthleteDto>().Result;
             ViewModel.SelectedAthlete = SelectedAthlete;
 
-            //showcase info about workout related to this athlete
-            //send a request to gather information about workout related to particular athlete Id
+            //showcase info about workout related to this Athlete
+            //send a request to gather information about workout related to particular Athlete Id
             url = "workoutdata/WorkoutListForAthlete/" + id;
             response = client.GetAsync(url).Result;
             IEnumerable<WorkoutDto> CurrentWorkout = response.Content.ReadAsAsync<IEnumerable<WorkoutDto>>().Result;
@@ -76,9 +76,9 @@ namespace FitnessApp.Controllers
         [HttpPost]
         public ActionResult Create(Athlete Athlete)
         {
-            //objective: add a new athlete into the system using API
-            //curl -H "Content-Type: application/json" -d @Athlete.json https://localhost:44376/api/athletedata/addathlete
-            string url = "athletedata/addathlete";
+            //objective: add a new Athlete into the system using API
+            //curl -H "Content-Type: application/json" -d @Athlete.json https://localhost:44376/api/Athletedata/addAthlete
+            string url = "Athletedata/addAthlete";
 
             string jsonpayload = jss.Serialize(Athlete);
             Debug.WriteLine(jsonpayload);
@@ -100,7 +100,7 @@ namespace FitnessApp.Controllers
         // GET: Athlete/Edit/5
         public ActionResult Edit(int id)
         {
-            string url = "athletedata/findathlete/" + id;
+            string url = "Athletedata/findAthlete/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
 
             AthleteDto SelectedAthlete = response.Content.ReadAsAsync<AthleteDto>().Result;
@@ -112,12 +112,12 @@ namespace FitnessApp.Controllers
         [HttpPost]
         public ActionResult Update(int id, Athlete Athlete)
         {
-            //objective: communicate with our athlete data api to retrieve one athlete
-            //curl -H "Content-Type: application/json" -d @Athlete.json https://localhost:44376/api/athletedata/updateathlete/{id}
+            //objective: communicate with our Athlete data api to retrieve one Athlete
+            //curl -H "Content-Type: application/json" -d @Athlete.json https://localhost:44376/api/Athletedata/updateAthlete/{id}
 
             AthleteDetails ViewModel = new AthleteDetails();
 
-            string url = "athletedata/updateathlete/" + id;
+            string url = "Athletedata/updateAthlete/" + id;
             string jsonpayload = jss.Serialize(Athlete);
 
             HttpContent content = new StringContent(jsonpayload);
@@ -137,7 +137,7 @@ namespace FitnessApp.Controllers
         // GET: Athlete/Delete/5
         public ActionResult DeleteConfirm(int id)
         {
-            string url = "athletedata/findathlete/" + id;
+            string url = "Athletedata/findAthlete/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
             AthleteDto SelectedAthlete = response.Content.ReadAsAsync<AthleteDto>().Result;
 
@@ -149,9 +149,9 @@ namespace FitnessApp.Controllers
         public ActionResult Delete(int id)
         {
             //objective: delete the Athlete through API using their AthleteID
-            ///curl -H "Content-Type: application/json" -d @Athlete.json https://localhost:44376/api/athletedata/deleteathlete/{id}
+            ///curl -H "Content-Type: application/json" -d @Athlete.json https://localhost:44376/api/Athletedata/deleteAthlete/{id}
 
-            string url = "athletedata/deleteathlete/" + id;
+            string url = "Athletedata/deleteAthlete/" + id;
 
             HttpContent content = new StringContent("");
 

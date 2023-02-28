@@ -5,8 +5,11 @@
 }
 
 <h2>List of Athletes</h2>
+
+<a href="/Athlete/new" style="background-color: #4CAF50; color: white; padding: 15px 20px;"> Add an Athlete </a>
+
 @foreach (var Athlete in Model)
 {
     <h2><a href="/Athlete/Details/@Athlete.AthleteId">@Athlete.AthleteLastName, @Athlete.AthleteFirstName</a></h2>
- 
+
 }

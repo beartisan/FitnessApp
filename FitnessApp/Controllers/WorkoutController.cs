@@ -80,6 +80,7 @@ namespace FitnessApp.Controllers
     }
 
         // GET: Workout/Details/5
+
         public ActionResult Details(int id)
         {
             WorkoutDetails ViewModel = new WorkoutDetails();
@@ -99,15 +100,15 @@ namespace FitnessApp.Controllers
            // Debug.WriteLine("Workout Found is : ");
             ViewModel.SelectedWorkout = SelectedWorkout;
 
-            //Shows athletes that are sharing specific workout
-            url = "athletedata/ListAthletesWithThisWorkout/" + id;
+            //Shows Athletes that are sharing specific workout
+            url = "Athletedata/ListAthletesWithThisWorkout/" + id;
             response = client.GetAsync(url).Result;
             IEnumerable<AthleteDto> AssociatedAthletes = response.Content.ReadAsAsync<IEnumerable<AthleteDto>>().Result;
 
             ViewModel.AssociatedAthletes = AssociatedAthletes;
 
-            //Shows athletes that are not connected or doing this specific workout
-            url = "athletedata/ListAthletesWithoutThisWorkout/" + id;
+            //Shows Athletes that are not connected or doing this specific workout
+            url = "Athletedata/ListAthletesWithoutThisWorkout/" + id;
             response = client.GetAsync(url).Result;
             IEnumerable<AthleteDto> UnassociatedAthletes = response.Content.ReadAsAsync<IEnumerable<AthleteDto>>().Result;
 
@@ -116,16 +117,16 @@ namespace FitnessApp.Controllers
             return View(ViewModel);
         }
 
-        //POST: Workout/Associate/{id}?AthleteId={athleteId}
+        //POST: Workout/Associate/{id}?AthleteId={AthleteId}
         [Authorize]
         [HttpPost]
         public ActionResult Associate(int id, int AthleteId)
         {
             GetApplicationCookie();
-            Debug.WriteLine("Associated Workout is: " + id + " and their athlete " + AthleteId);
+            Debug.WriteLine("Associated Workout is: " + id + " and their Athlete " + AthleteId);
 
-            //Call API that associates the workout with athletes
-            string url = "workoutdata/associateworkoutwithathlete/" + id + "/" + AthleteId;
+            //Call API that associates the workout with Athletes
+            string url = "workoutdata/associateworkoutwithAthlete/" + id + "/" + AthleteId;
             HttpContent content = new StringContent("");
             content.Headers.ContentType.MediaType = "application/json";
             HttpResponseMessage response = client.PostAsync(url, content).Result;
@@ -134,16 +135,16 @@ namespace FitnessApp.Controllers
 
         }
 
-        //POST: Workout/Unassociate/{id}?AthleteId={athleteId}
+        //POST: Workout/Unassociate/{id}?AthleteId={AthleteId}
         [Authorize]
         [HttpPost]
         public ActionResult Unassociate(int id, int AthleteId)
         {
             GetApplicationCookie();
-            Debug.WriteLine("Unassociated Workout is: " + id + " and their unassociated athlete " + AthleteId);
+            Debug.WriteLine("Unassociated Workout is: " + id + " and their unassociated Athlete " + AthleteId);
 
-            //Call API that the workout is not associated with athletes
-            string url = "workoutdata/unassociateworkoutwithathlete/" + id + "/" + AthleteId;
+            //Call API that the workout is not associated with Athletes
+            string url = "workoutdata/unassociateworkoutwithAthlete/" + id + "/" + AthleteId;
             HttpContent content = new StringContent("");
             content.Headers.ContentType.MediaType = "application/json";
             HttpResponseMessage response = client.PostAsync(url, content).Result;
@@ -156,9 +157,9 @@ namespace FitnessApp.Controllers
         public ActionResult New()
         {
             //information about ALL categories in the system
-            // GET: api/categorydata/categorylist
+            // GET: api/categorydata/listcategory
 
-            string url = "categorydata/categorylist";
+            string url = "categorydata/listcategory";
             HttpResponseMessage response = client.GetAsync(url).Result;
             IEnumerable<CategoriesDto> CategoryOptions = response.Content.ReadAsAsync<IEnumerable<CategoriesDto>>().Result;
 

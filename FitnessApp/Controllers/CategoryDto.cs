@@ -1,6 +1,6 @@
-﻿namespace FitnessApp.Controllers
-{
-    internal class CategoryDto
-    {
-    }
-}
+﻿//namespace FitnessApp.Controllers
+//{
+//    internal class CategoryDto
+//    {
+//    }
+//}

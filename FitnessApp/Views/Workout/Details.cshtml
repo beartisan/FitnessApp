@@ -23,23 +23,23 @@
 <div>Duration: @Model.SelectedWorkout.WorkoutDuration minutes</div>
 <div>Category: @Model.SelectedWorkout.CategoryName</div>
 
-<div class="athlete-container">
-    <h3>Athletes doing this Workout: @Model.SelectedWorkout.WorkoutName:</h3>
-    @foreach (var athlete in Model.AssociatedAthletes)
+<div class="Athlete-container">
+    <h3>Athletes doing this Workout: @Model.SelectedWorkout.WorkoutName</h3>
+    @foreach (var Athlete in Model.AssociatedAthletes)
     {
         @*regarding viewModels in WorkoutDetails*@
 
-        <a href="/athlete/details/@athlete.AthleteId">@athlete.AthleteFirstName @athlete.AthleteLastName</a>
-        <a style="color: #ff0000;" href="/athlete/unassociate/@Model.SelectedWorkout.WorkoutId?AthleteId=@athlete.AthleteId">[x]</a>
+        <a href="/Athlete/details/@Athlete.AthleteId">@Athlete.AthleteFirstName @Athlete.AthleteLastName</a>
+        <a style="color: #ff0000;" href="/Athlete/details/@Model.SelectedWorkout.WorkoutId?AthleteId=@Athlete.AthleteId">[x]</a>
         <br />
     }
     <div>
         <h3>Add New Athlete to this workout @Model.SelectedWorkout.WorkoutName</h3>
         <form action="/workout/associate/@Model.SelectedWorkout.WorkoutId" method="POST">
             <select name="AthleteId">
-                @foreach (var athlete in Model.UnassociatedAthletes)
+                @foreach (var Athlete in Model.UnassociatedAthletes)
                 {
-                    <option value="@athlete.AthleteId">@athlete.AthleteFirstName @athlete.AthleteLastName</option>
+                    <option value="@Athlete.AthleteId">@Athlete.AthleteFirstName @Athlete.AthleteLastName</option>
                 }
             </select>
             <input type="submit" value="Add This Athlete" />

@@ -15,7 +15,7 @@ namespace FitnessApp.Models
 
         public string AthleteLastName { get; set; }
 
-        //athlete can have a lot of workouts
+        //Athlete can have a lot of workouts
         public ICollection<Workout> Workouts { get; set; }
 
     }

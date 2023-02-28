@@ -15,18 +15,12 @@
     <div class="duration">
         <label>Workout Duration (in minutes): </label> <input type="number" name="WorkoutDuration" />
     </div>
-    <div class="categoryId">
-        <label>Category ID: </label> <input type="number" name="CategoryId" />
-    </div>
     <div class="categoryName">
         <label for="CategoryName">Category Name: </label>
         <select name="CategoryName" id="category">
-            <option disabled selected value>-- Choose a category name -- </option>
-            <option value="Endurance">Endurance</option>
-            <option value="Balance">Balance</option>
-            <option value="Strength">Strength</option>
-            <option value="Flexibility">Flexibility</option>
-            <option value="Body Composition">Body Composition</option>
+            @foreach (var Category in Model) {
+            <option value="@Category.CategoryId">@Category.CategoryName</option>
+            }
         </select>
     </div>
     <div class="button">

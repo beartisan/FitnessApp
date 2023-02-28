@@ -19,10 +19,10 @@ namespace FitnessApp.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         /// <summary>
-        /// Returns all athletes in the system
+        /// Returns all Athletes in the system
         /// </summary>
         /// <returns>
-        /// All athletes in the database including their workout category
+        /// All Athletes in the database including their workout category
         /// </returns>
         /// <example>
         /// GET: api/AthleteData/ListAthletes
@@ -46,10 +46,10 @@ namespace FitnessApp.Controllers
         }
 
         /// <summary>
-        /// returns all athletes with a particular workout
+        /// returns all Athletes with a particular workout
         /// </summary>
         /// <return>
-        /// all athletes in the database that belongs to a particular workout
+        /// all Athletes in the database that belongs to a particular workout
         /// </return>
         /// <param name="id">Workout Primary Key</param>
         /// <example>
@@ -76,11 +76,11 @@ namespace FitnessApp.Controllers
         }
 
         /// <summary>
-        /// returns all athletes in the system not associated to a particular workout
+        /// returns all Athletes in the system not associated to a particular workout
         /// </summary>
         /// <param name="id">Primary key of Workout ID</param>
         /// <returns>
-        /// content: Shows all athletes in the system NOT associated to a particular workout
+        /// content: Shows all Athletes in the system NOT associated to a particular workout
         /// </returns>
         ///<example>
         /// GET: api/AthleteData/ListAthletesWithoutThisWorkout/2
@@ -106,12 +106,12 @@ namespace FitnessApp.Controllers
         }
 
         /// <summary>
-        /// Returns all athletes in the system
+        /// Returns all Athletes in the system
         /// </summary>
         /// <returns>
         /// Header: 200(Ok)
         /// Content:
-        /// Shows an athlete that belongs with their primary key of AthleteID
+        /// Shows an Athlete that belongs with their primary key of AthleteID
         /// or
         /// Header: 404 (Not Found)
         /// </returns>
@@ -139,7 +139,7 @@ namespace FitnessApp.Controllers
         }
 
         /// <summary>
-        /// Updates a particular athlete in the system using POST data input
+        /// Updates a particular Athlete in the system using POST data input
         /// </summary>
         /// <returns>
         /// Header: 200(Ok)
@@ -149,12 +149,12 @@ namespace FitnessApp.Controllers
         /// Header: 404 (Not Found)
         /// </returns>
         /// <param name="id">Represents the primary key of Athlete ID</param>
-        /// <param name="athlete">JSON Form data of an athlete</param>
+        /// <param name="Athlete">JSON Form data of an Athlete</param>
         /// <example>
         /// GET: api/AthleteData/UpdateAthlete/2
         /// </example>
         [ResponseType(typeof(void))]
-        [HttpGet]
+        [HttpPost]
         public IHttpActionResult UpdateAthlete(int id, Athlete Athlete)
         {
             if (!ModelState.IsValid)
@@ -187,7 +187,7 @@ namespace FitnessApp.Controllers
         }
 
         /// <summary>
-        /// Adds an athlete into the system
+        /// Adds an Athlete into the system
         /// </summary>
         /// <returns>
         /// Header: 201(Created)
@@ -195,7 +195,7 @@ namespace FitnessApp.Controllers
         /// or
         /// Header: 400 (Bad Request)
         /// </returns>
-        /// <param name="athlete">JSON form data of an Athlete </param>
+        /// <param name="Athlete">JSON form data of an Athlete </param>
         /// <example>
         /// POST: api/AthleteData/AddAthlete
         /// FORM DATA: Athlete JSON Object
@@ -217,7 +217,7 @@ namespace FitnessApp.Controllers
         }
 
         /// <summary>
-        /// Removes an athlete into the system through their athleteID
+        /// Removes an Athlete into the system through their AthleteID
         /// </summary>
         /// <returns>
         /// Header: 200(Ok)

@@ -25,7 +25,7 @@ namespace FitnessApp.Controllers
         /// Content: all categories in the dbase
         /// </returns>
         /// <example> 
-        /// GET: api/CategoryData/categorylist
+        /// GET: api/CategoryData/ListCategory
         /// </example>
 
         [HttpGet]
@@ -137,7 +137,7 @@ namespace FitnessApp.Controllers
         // POST: api/CategoryData/AddCategory
         [HttpPost]
         [ResponseType(typeof(Category))]
-        public IHttpActionResult PostCategory(Category Category)
+        public IHttpActionResult AddCategory(Category Category)
         {
             if (!ModelState.IsValid)
             {
@@ -151,7 +151,7 @@ namespace FitnessApp.Controllers
         }
 
         /// <summary>
-        /// Adds a category to the system
+        /// Deletes a category to the system
         /// </summary>
         /// <param name="category">JSON Form Data of Category</param>
         /// <returns>

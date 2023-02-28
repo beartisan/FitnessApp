@@ -32,8 +32,8 @@ namespace FitnessApp.Models
 
 
 
-        //a Workout have a lot of athlete
-        //athlete can have a lot of Workouts
+        //a Workout have a lot of Athlete
+        //Athlete can have a lot of Workouts
         public ICollection<Athlete> Athletes { get; set; }
 
         //location id

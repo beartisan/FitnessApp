@@ -21,10 +21,11 @@
 
 <div class="workout-container">
     <h3>Workout Lists:</h3>
-    @*referencing athletecontroller and viewModel of AthleteDetails*@
+    @*referencing Athletecontroller and viewModel of AthleteDetails*@
     @foreach (var workout in Model.CurrentWorkout)
     {
         <a href="/workout/details/@workout.WorkoutId">@workout.WorkoutName</a>
         <br />
     }
+    @*<a href="/workout/new" style="background-color: #4CAF50; color: white; padding: 15px 20px;"> Add a Workout </a>*@
 </div>

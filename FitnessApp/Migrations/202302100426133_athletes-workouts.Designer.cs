@@ -7,13 +7,13 @@ namespace FitnessApp.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class athletesworkouts : IMigrationMetadata
+    public sealed partial class Athletesworkouts : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(athletesworkouts));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Athletesworkouts));
         
         string IMigrationMetadata.Id
         {
-            get { return "202302100426133_athletes-workouts"; }
+            get { return "202302100426133_Athletes-workouts"; }
         }
         
         string IMigrationMetadata.Source

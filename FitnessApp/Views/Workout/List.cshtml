@@ -4,7 +4,10 @@
     ViewBag.Title = "List";
 }
 
-<h2>List</h2>
+<h2>Workout List</h2>
+
+<a href="/workout/new" style="background-color: #4CAF50; color: white; padding: 15px 20px;"> Add a Workout </a>
+
 @foreach (var Workout in Model)
 {
     <h2><a href="/Workout/Details/@Workout.WorkoutId">@Workout.WorkoutName</a></h2>

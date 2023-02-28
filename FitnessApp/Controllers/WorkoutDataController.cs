@@ -81,7 +81,7 @@ namespace FitnessApp.Controllers
         /// Gathers information about the workout relating to their particular Athlete Id
         /// </summary>
         /// <returns>
-        /// CONTENT: all workout in the database that including their associated category that mathches the particular athlete.
+        /// CONTENT: all workout in the database that including their associated category that mathches the particular Athlete.
         /// </returns>
         /// <param name="id">Athlete ID</param>
         /// <example>
@@ -92,7 +92,7 @@ namespace FitnessApp.Controllers
         [ResponseType(typeof(WorkoutDto))]
         public IHttpActionResult WorkoutListForAthlete(int id)
         {
-            //all workout where animals that have the athlete that matches the id
+            //all workout where animals that have the Athlete that matches the id
             List<Workout> Workouts = db.Workouts.Where(
                    w => w.Athletes.Any(
                     a=>a.AthleteId == id
@@ -122,12 +122,12 @@ namespace FitnessApp.Controllers
         /// <param name="WorkoutId">Workout ID</param>
         /// <param name="AthleteId">Athlete ID</param>
         /// <example>
-        /// GET: api/workoutdata/AssociatedWorkoutWithAthlete/{workoutId}/{athleteId}
+        /// GET: api/workoutdata/AssociatedWorkoutWithAthlete/{workoutId}/{AthleteId}
         ///      api/workoutdata/AssociatedWorkoutWithAthlete/1/2
         /// </example>
 
         [HttpPost]
-        [Route("api/workoutdata/AssociatedWorkoutWithAthlete/{workoutId}/{athleteId}")]
+        [Route("api/workoutdata/AssociatedWorkoutWithAthlete/{workoutId}/{AthleteId}")]
         [Authorize]
         public IHttpActionResult AssociatedWorkoutWithAthlete(int WorkoutId, int AthleteId)
         {
@@ -159,12 +159,12 @@ namespace FitnessApp.Controllers
         /// <param name="WorkoutId">Workout ID primary key</param>
         /// <param name="AthleteId">Athlete ID primary key</param>
         /// <example>
-        /// GET: api/workoutdata/UnassociatedWorkoutWithAthlete/{workoutId}/{athleteId}
+        /// GET: api/workoutdata/UnassociatedWorkoutWithAthlete/{workoutId}/{AthleteId}
         ///      api/workoutdata/UnassociatedWorkoutWithAthlete/1/1
         /// </example>
 
         [HttpPost]
-        [Route("api/workoutdata/UnassociatedWorkoutWithAthlete/{workoutId}/{athleteId}")]
+        [Route("api/workoutdata/UnassociatedWorkoutWithAthlete/{workoutId}/{AthleteId}")]
         [Authorize]
         public IHttpActionResult UnassociatedWorkoutWithAthlete(int WorkoutId, int AthleteId)
         {

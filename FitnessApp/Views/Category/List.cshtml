@@ -1,11 +1,11 @@
-﻿@model IEnumerable<FitnessApp.Models.CategoryDto>
+﻿@model IEnumerable<FitnessApp.Models.CategoriesDto>
 
 @{
     ViewBag.Title = "List";
 }
 
 <h2>List of Categories</h2>
-<a href="/category/new">New Category</a>
+<a href="/category/new" style="background-color: #4CAF50; color: white; padding: 15px 20px;"> Add New Category</a>
 @foreach (var Category in Model)
 {
     <h2><a href="/Category/Details/@Category.CategoryId">@Category.CategoryName</a></h2>

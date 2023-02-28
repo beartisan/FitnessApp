@@ -24,17 +24,17 @@ namespace FitnessApp.Controllers
         }
 
         // GET: Category/List
-        public ActionResult Index()
+        public ActionResult List()
         {
             //objective: communicate with our category data api to retrieve a list of categories
-            //curl https://localhost:44376/api/categorydata/categorylist
+            //curl https://localhost:44376/api/categorydata/ListCategory
 
-            string url = "categorydata/categorylist";
+            string url = "categorydata/ListCategory";
             HttpResponseMessage response = client.GetAsync(url).Result;
 
-            IEnumerable<CategoriesDto> Categories = response.Content.ReadAsAsync<IEnumerable<CategoriesDto>>().Result;
+            IEnumerable<CategoriesDto> Category = response.Content.ReadAsAsync<IEnumerable<CategoriesDto>>().Result;
 
-            return View(Categories);
+            return View(Category);
         }
 
         // GET: Category/Details/5
@@ -48,8 +48,8 @@ namespace FitnessApp.Controllers
             string url = "categorydata/findcategory/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
 
-            CategoriesDto selectedCategory = response.Content.ReadAsAsync<CategoriesDto>().Result;
-            ViewModel.SelectedCategory = selectedCategory;
+            CategoriesDto SelectedCategory = response.Content.ReadAsAsync<CategoriesDto>().Result;
+            ViewModel.SelectedCategory = SelectedCategory;
 
             //showcase info about workout related to this category
             //send a request to gather information about workout related to particular category Id
@@ -105,9 +105,9 @@ namespace FitnessApp.Controllers
             string url = "categorydata/findcategory/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
 
-            CategoriesDto selectedCategory = response.Content.ReadAsAsync<CategoriesDto>().Result;
+            CategoriesDto SelectedCategory = response.Content.ReadAsAsync<CategoriesDto>().Result;
             
-            return View(selectedCategory);
+            return View(SelectedCategory);
         }
 
         // POST: Category/Update/5
@@ -143,9 +143,9 @@ namespace FitnessApp.Controllers
         {
             string url = "categorydata/findcategory/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
-            CategoriesDto selectedCategory = response.Content.ReadAsAsync<CategoriesDto>().Result;
+            CategoriesDto SelectedCategory = response.Content.ReadAsAsync<CategoriesDto>().Result;
 
-            return View(selectedCategory);
+            return View(SelectedCategory);
         }
 
         // POST: Category/Delete/5
