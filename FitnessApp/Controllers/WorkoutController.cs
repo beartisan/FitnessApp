@@ -8,6 +8,7 @@ using System.Diagnostics;
 using FitnessApp.Models;
 using FitnessApp.Models.ViewModels;
 using System.Web.Script.Serialization;
+using FitnessApp.Migrations;
 
 
 namespace FitnessApp.Controllers
@@ -75,14 +76,6 @@ namespace FitnessApp.Controllers
         IEnumerable<WorkoutDto> Workouts = response.Content.ReadAsAsync<IEnumerable<WorkoutDto>>().Result;
 
         return View(Workouts);
-        //if response is  successfull
-        //if (response.IsSuccessStatusCode)
-        //{
-        //    string json = await response.Content.ReadAsStringAsync();
-        //    IEnumerable<WorkoutDto> Workouts = JsonConvert.DeserializeObject<List<WorkoutDto>>(json);
-        //    return View(Workouts);
-        //}
-        //return View(new List<WorkoutDto>());
 
     }
 
@@ -248,25 +241,42 @@ namespace FitnessApp.Controllers
         }
 
         // GET: Workout/Delete/5
-        public ActionResult Delete(int id)
+        [HttpPost]
+        [Authorize]
+        public ActionResult DeleteConfirm(int id)
         {
-            return View();
+            string url = "workoutdata/findworkout/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            WorkoutDto SelectedWorkout = response.Content.ReadAsAsync<WorkoutDto>().Result;
+            
+            return View(SelectedWorkout);
         }
 
         // POST: Workout/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [Authorize]
+        public ActionResult Delete(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            GetApplicationCookie();
 
-                return RedirectToAction("Index");
-            }
-            catch
+            //delete  workout into the system through API
+            //curl -H "Content-Type: application/json" -d @workout.json https://localhost:44376/api/workoutdata/deleteworkout/1
+            string url = "workoutdata/deleteworkout/" + id;
+
+            HttpContent content = new StringContent("");
+            content.Headers.ContentType.MediaType = "application/json";
+            HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+
+            if (response.IsSuccessStatusCode)
             {
-                return View();
+                return RedirectToAction("List");
             }
+            else
+            {
+                return RedirectToAction("Error");
+            }
+
         }
     }
 }
