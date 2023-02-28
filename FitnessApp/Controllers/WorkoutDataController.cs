@@ -119,15 +119,15 @@ namespace FitnessApp.Controllers
         /// Header: 200(Ok) or
         /// Header: 404(Not Found)
         /// </returns>
-        /// <param name="workoutId">Workout ID</param>
-        /// <param name="athleteId">Athlete ID</param>
+        /// <param name="WorkoutId">Workout ID</param>
+        /// <param name="AthleteId">Athlete ID</param>
         /// <example>
-        /// GET: api/workoutdata/associatedworkoutwithathlete/{workoutId}/{athleteId}
-        ///      api/workoutdata/associatedworkoutwithathlete/1/2
+        /// GET: api/workoutdata/AssociatedWorkoutWithAthlete/{workoutId}/{athleteId}
+        ///      api/workoutdata/AssociatedWorkoutWithAthlete/1/2
         /// </example>
 
         [HttpPost]
-        [Route("api/workoutdata/associatedworkoutwithathlete/{workoutId}/{athleteId}")]
+        [Route("api/workoutdata/AssociatedWorkoutWithAthlete/{workoutId}/{athleteId}")]
         [Authorize]
         public IHttpActionResult AssociatedWorkoutWithAthlete(int WorkoutId, int AthleteId)
         {
@@ -156,17 +156,17 @@ namespace FitnessApp.Controllers
         /// Header: 200(Ok) or
         /// Header: 404(Not Found)
         /// </returns>
-        /// <param name="workoutId">Workout ID primary key</param>
-        /// <param name="athleteId">Athlete ID primary key</param>
+        /// <param name="WorkoutId">Workout ID primary key</param>
+        /// <param name="AthleteId">Athlete ID primary key</param>
         /// <example>
-        /// GET: api/workoutdata/unassociatedworkoutwithathlete/{workoutId}/{athleteId}
-        ///      api/workoutdata/unassociatedworkoutwithathlete/1/1
+        /// GET: api/workoutdata/UnassociatedWorkoutWithAthlete/{workoutId}/{athleteId}
+        ///      api/workoutdata/UnassociatedWorkoutWithAthlete/1/1
         /// </example>
 
         [HttpPost]
-        [Route("api/workoutdata/unassociatedworkoutwithathlete/{workoutId}/{athleteId}")]
+        [Route("api/workoutdata/UnassociatedWorkoutWithAthlete/{workoutId}/{athleteId}")]
         [Authorize]
-        public IHttpActionResult UnssociatedWorkoutWithAthlete(int WorkoutId, int AthleteId)
+        public IHttpActionResult UnassociatedWorkoutWithAthlete(int WorkoutId, int AthleteId)
         {
 
             Workout SelectedWorkout = db.Workouts.Include(w => w.Athletes).Where( w => w.WorkoutId == WorkoutId).FirstOrDefault();
@@ -189,11 +189,11 @@ namespace FitnessApp.Controllers
         /// <returns>
         /// CONTENT: all workout in the database, matching their workoutID
         /// </returns>
-        /// <param name="id">workout Id</param>
+        /// <param name="id">Primary Key of Workout Id</param>
         /// <example>
         /// GET: https://localhost:44376/api/WorkoutData/FindWorkout/5
         /// </example>
-        [ResponseType(typeof(Workout))]
+        [ResponseType(typeof(WorkoutDto))]
         [HttpGet]
         public IHttpActionResult FindWorkout(int id)
         {
@@ -204,7 +204,7 @@ namespace FitnessApp.Controllers
                 WorkoutName = Workout.WorkoutName,
                 WorkoutDate = Workout.WorkoutDate,
                 WorkoutDuration = Workout.WorkoutDuration,
-                CategoryId = Workout.CategoryId,
+                CategoryId = Workout.Category.CategoryId,
                 CategoryName = Workout.Category.CategoryName //,
  //               AthletesId = Workout.Athletes.AthletesId
             };
@@ -233,6 +233,7 @@ namespace FitnessApp.Controllers
 
         [ResponseType(typeof(void))]
         [HttpPost]
+        [Authorize]
         public IHttpActionResult UpdateWorkout(int id, Workout Workout)
         {
             Debug.WriteLine("Update Workout Reached");
@@ -288,6 +289,7 @@ namespace FitnessApp.Controllers
         
         [ResponseType(typeof(Workout))]
         [HttpPost]
+        [Authorize]
         public IHttpActionResult AddWorkout(Workout workout)
         {
             if (!ModelState.IsValid)
@@ -313,6 +315,7 @@ namespace FitnessApp.Controllers
     
         [ResponseType(typeof(Workout))]
         [HttpPost]
+        [Authorize]
         public IHttpActionResult DeleteWorkout(int id)
         {
             Workout Workout = db.Workouts.Find(id);

@@ -6,39 +6,43 @@
 
 <h2>Show Workout</h2>
 
-<a href="/Workout/List">  &larr; Go back to Workout List</a>
+<a href="/Workout/List" style="border: 3px #555 solid; padding: 2px;">  &larr; Go back to Workout List</a>
+<br />
 <br />
 
-<a href="/Workout/Edit/@Model.SelectedWorkout.WorkoutId" style="color: #0094ff;">Update Workout</a>
+<a href="/Workout/Edit/@Model.SelectedWorkout.WorkoutId" style="background-color: #0094ff; color: white; padding: 15px 20px;">Update Workout</a>
+<br />
+<br />
 <br />
 
-<a href="/Athlete/DeleteConfirm/@Model.SelectedWorkout.WorkoutId" style="color: #d92929;"> Delete Workout </a>
+<a href="/Athlete/DeleteConfirm/@Model.SelectedWorkout.WorkoutId" style="background-color: #d92929; color: white; padding: 15px 20px; margin-right: 55px;"> Delete Workout </a>
+<br />
 
-    <h3>@Model.SelectedWorkout.WorkoutName</h3>
-    <div>Date: @Model.SelectedWorkout.WorkoutDate</div>
-    <div>Duration: @Model.SelectedWorkout.WorkoutDuration minutes</div>
-    <div>Category: @Model.SelectedWorkout.CategoryName</div>
+<h3>@Model.SelectedWorkout.WorkoutName</h3>
+<div>Date: @Model.SelectedWorkout.WorkoutDate</div>
+<div>Duration: @Model.SelectedWorkout.WorkoutDuration minutes</div>
+<div>Category: @Model.SelectedWorkout.CategoryName</div>
 
 <div class="athlete-container">
     <h3>Athletes doing this Workout: @Model.SelectedWorkout.WorkoutName:</h3>
-    @foreach(var athlete in Model.AssociatedAthletes)
-            {
-                @*regarding viewModels in WorkoutDetails*@
+    @foreach (var athlete in Model.AssociatedAthletes)
+    {
+        @*regarding viewModels in WorkoutDetails*@
 
-                <a href="/athlete/details/@athlete.AthleteId">@athlete.AthleteFirstName @athlete.AthleteLastName</a>
-                <a style="color: #ff0000;" href="/athlete/unassociate/@Model.SelectedWorkout.WorkoutId?AthleteId=@athlete.AthleteId">[x]</a>
-                <br />
-            }
+        <a href="/athlete/details/@athlete.AthleteId">@athlete.AthleteFirstName @athlete.AthleteLastName</a>
+        <a style="color: #ff0000;" href="/athlete/unassociate/@Model.SelectedWorkout.WorkoutId?AthleteId=@athlete.AthleteId">[x]</a>
+        <br />
+    }
     <div>
         <h3>Add New Athlete to this workout @Model.SelectedWorkout.WorkoutName</h3>
         <form action="/workout/associate/@Model.SelectedWorkout.WorkoutId" method="POST">
             <select name="AthleteId">
-               @foreach (var athlete in Model.UnassociatedAthletes)
+                @foreach (var athlete in Model.UnassociatedAthletes)
                 {
                     <option value="@athlete.AthleteId">@athlete.AthleteFirstName @athlete.AthleteLastName</option>
                 }
             </select>
-            <input type="submit" value="Add This Athlete"/>
+            <input type="submit" value="Add This Athlete" />
         </form>
     </div>
 </div>

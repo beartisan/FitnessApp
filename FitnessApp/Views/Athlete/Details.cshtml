@@ -6,13 +6,17 @@
 
 <h2>Athlete Workout Details:</h2>
 
-<a href="/Athlete/List">Back to List of Athletes</a>
+<a href="/Athlete/List" style="border: 3px #555 solid; padding: 2px;">  &larr; Back to List of Athletes</a>
+<br />
 <br />
 
-<a href="/Athlete/Edit/@Model.SelectedAthlete.AthleteId" style="color: #0094ff;">Update Athlete</a>
+<a href="/Athlete/Edit/@Model.SelectedAthlete.AthleteId" style="background-color: #0094ff; color: white; padding: 15px 20px;">Update Athlete</a>
+<br />
+<br />
 <br />
 
-<a href="/Athlete/DeleteConfirm/@Model.SelectedAthlete.AthleteId" style="color: #d92929;"> Delete Athlete </a>
+<a href="/Athlete/DeleteConfirm/@Model.SelectedAthlete.AthleteId" style="background-color: #d92929; color: white; padding: 15px 20px; margin-right: 55px;"> Delete Athlete </a>
+<br />
 <h2>@Model.SelectedAthlete.AthleteFirstName @Model.SelectedAthlete.AthleteLastName</h2>
 
 <div class="workout-container">

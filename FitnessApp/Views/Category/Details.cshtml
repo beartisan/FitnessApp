@@ -6,14 +6,17 @@
 
 <h2>Category Details:</h2>
 
-<a href="/Category/List">Back to Category List</a>
+<a href="/Category/List" style="border: 3px #555 solid; padding: 2px;">  &larr; Back to Category List</a>
+<br /> 
 <br />
 
-<a href="/Category/Edit/@Model.SelectedCategory.CategoryId" style="color: #0094ff;">Update Category</a>
+<a href="/Category/Edit/@Model.SelectedCategory.CategoryId" style="background-color: #0094ff; color: white; padding: 15px 20px;">Update Category</a>
 <br />
-
-<a href="/Category/DeleteConfirm/@Model.SelectedCategory.CategoryId" style="color: #d92929;"> Delete Category </a>
+<br />
+<br />
+<a href="/Category/DeleteConfirm/@Model.SelectedCategory.CategoryId" style="background-color: #d92929; color: white; padding: 15px 20px; margin-right: 55px;"> Delete Category </a>
 <h2>@Model.SelectedCategory.CategoryName</h2>
+<br />
 
 <div style="margin-top: 90px;">
     <h3>Workout Related to this Category:</h3>

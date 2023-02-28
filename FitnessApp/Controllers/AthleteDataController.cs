@@ -55,6 +55,7 @@ namespace FitnessApp.Controllers
         /// <example>
         /// GET: api/AthleteData/ListAthletesWithThisWorkout/2
         /// </example>
+        [HttpGet]
         [ResponseType(typeof(AthleteDto))]
         public IHttpActionResult ListAthletesWithThisWorkout(int id)
         {
@@ -136,6 +137,7 @@ namespace FitnessApp.Controllers
 
             return Ok(AthleteDto);
         }
+
         /// <summary>
         /// Updates a particular athlete in the system using POST data input
         /// </summary>
@@ -153,7 +155,6 @@ namespace FitnessApp.Controllers
         /// </example>
         [ResponseType(typeof(void))]
         [HttpGet]
-
         public IHttpActionResult UpdateAthlete(int id, Athlete Athlete)
         {
             if (!ModelState.IsValid)
@@ -258,7 +259,7 @@ namespace FitnessApp.Controllers
 
         private bool AthleteExists(int id)
         {
-            return db.Athletes.Count(ex => ex.AthleteId == id) > 0;
+            return db.Athletes.Count(e => e.AthleteId == id) > 0;
         }
 
     }
