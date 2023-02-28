@@ -56,11 +56,12 @@ namespace FitnessApp.Controllers
         /// Header: 404 (Not Found)
         /// </returns>
         // GET: api/CategoryData/FindCategory/5
-        [ResponseType(typeof(Category))]
+        [ResponseType(typeof(CategoriesDto))]
+        [HttpGet]
         public IHttpActionResult FindCategory(int id)
         {
             Category Category = db.Categories.Find(id);
-            CategoriesDto CategoriesDtos = new CategoriesDto()
+            CategoriesDto CategoriesDto = new CategoriesDto()
             {
                 CategoryId = Category.CategoryId,
                 CategoryName = Category.CategoryName
@@ -73,22 +74,36 @@ namespace FitnessApp.Controllers
             return Ok(CategoriesDto);
         }
 
-        // POST: api/CategoryData/UpdateCategory/5
+        /// <summary>
+        /// Updates specific category in the system with POST Data input
+        /// </summary>
+        /// <param name="id">Primary Key of Category Id</param>
+        /// <param name="category">JSON Data of Category</param>
+        /// <returns>
+        /// Header: 204 (success)
+        /// or
+        /// Header: 400 (Bad Request)
+        /// or
+        /// Header: 404 (Request Not Found)
+        /// </returns>
+        /// POST: api/CategoryData/UpdateCategory/5
+        /// FORM DATA: Category JSON Object
+        
         [ResponseType(typeof(void))]
         [HttpPost]
-        public IHttpActionResult UpdateCategory(int id, Category category)
+        public IHttpActionResult UpdateCategory(int id, Category Category)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != category.CategoryId)
+            if (id != Category.CategoryId)
             {
                 return BadRequest();
             }
 
-            db.Entry(category).State = EntityState.Modified;
+            db.Entry(Category).State = EntityState.Modified;
 
             try
             {
@@ -109,37 +124,59 @@ namespace FitnessApp.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        /// <summary>
+        /// Adds a category to the system
+        /// </summary>
+        /// <param name="category">JSON Form Data of Category</param>
+        /// <returns>
+        /// Header: 201 (created)
+        /// Content: Category Id, Category Name
+        /// or
+        /// Header: 400 (Bad Request)
+        /// </returns>
         // POST: api/CategoryData/AddCategory
         [HttpPost]
         [ResponseType(typeof(Category))]
-        public IHttpActionResult PostCategory(Category category)
+        public IHttpActionResult PostCategory(Category Category)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Categories.Add(category);
+            db.Categories.Add(Category);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = category.CategoryId }, category);
+            return CreatedAtRoute("DefaultApi", new { id = Category.CategoryId }, Category);
         }
 
-        // POST: DELETE: api/CategoryData/DeleteCategory/5
+        /// <summary>
+        /// Adds a category to the system
+        /// </summary>
+        /// <param name="category">JSON Form Data of Category</param>
+        /// <returns>
+        /// Header: 201 (created)
+        /// Content: Category Id, Category Name
+        /// or
+        /// Header: 400 (Bad Request)
+        /// </returns>     
+        /// POST: DELETE: api/CategoryData/DeleteCategory/5
+        /// Form Data: Empty
+        
         [ResponseType(typeof(Category))]
         [HttpPost]
         public IHttpActionResult DeleteCategory(int id)
         {
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            Category Category = db.Categories.Find(id);
+            if (Category == null)
             {
                 return NotFound();
             }
 
-            db.Categories.Remove(category);
+            db.Categories.Remove(Category);
             db.SaveChanges();
 
-            return Ok(category);
+            return Ok();
         }
 
         protected override void Dispose(bool disposing)
