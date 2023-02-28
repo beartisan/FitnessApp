@@ -120,10 +120,42 @@ namespace FitnessApp.Controllers
 
             ViewModel.UnassociatedAthletes = UnassociatedAthletes;
 
-
             return View(ViewModel);
+        }
 
-            //return View(selectedWorkout);
+        //POST: Workout/Associate/{id}?AthleteId={athleteId}
+        [Authorize]
+        [HttpPost]
+        public ActionResult Associate(int id, int AthleteId)
+        {
+            GetApplicationCookie();
+            Debug.WriteLine("Associated Workout is: " + id + " and their athlete " + AthleteId);
+
+            //Call API that associates the workout with athletes
+            string url = "workoutdata/associateworkoutwithathlete/" + id + "/" + AthleteId;
+            HttpContent content = new StringContent("");
+            content.Headers.ContentType.MediaType = "application/json";
+            HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+            return RedirectToAction("Details/" + id);
+
+        }
+
+        //POST: Workout/Unassociate/{id}?AthleteId={athleteId}
+        [Authorize]
+        [HttpPost]
+        public ActionResult Unassociate(int id, int AthleteId)
+        {
+            GetApplicationCookie();
+            Debug.WriteLine("Unassociated Workout is: " + id + " and their unassociated athlete " + AthleteId);
+
+            //Call API that the workout is not associated with athletes
+            string url = "workoutdata/unassociateworkoutwithathlete/" + id + "/" + AthleteId;
+            HttpContent content = new StringContent("");
+            content.Headers.ContentType.MediaType = "application/json";
+            HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+            return RedirectToAction("Details/" + id);
         }
 
         // GET: Workout/New

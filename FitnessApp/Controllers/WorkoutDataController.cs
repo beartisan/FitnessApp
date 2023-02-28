@@ -113,6 +113,77 @@ namespace FitnessApp.Controllers
         }
 
         /// <summary>
+        /// Gathers an Athlete associated with a particular workout through workoutId
+        /// </summary>
+        /// <returns>
+        /// Header: 200(Ok) or
+        /// Header: 404(Not Found)
+        /// </returns>
+        /// <param name="workoutId">Workout ID</param>
+        /// <param name="athleteId">Athlete ID</param>
+        /// <example>
+        /// GET: api/workoutdata/associateworkoutwithathlete/{workoutId}/{athleteId}
+        ///      api/workoutdata/associateworkoutwithathlete/1/2
+        /// </example>
+
+        [HttpPost]
+        [Route("api/workoutdata/associateworkoutwithathlete/{workoutId}/{athleteId}")]
+        [Authorize]
+        public IHttpActionResult AssociateWorkoutWithAthlete(int WorkoutId, int AthleteId)
+        {
+           
+            Workout SelectedWorkout = db.Workouts.Include(
+                   w => w.Athletes).Where(
+                    w => w.WorkoutId == WorkoutId
+                ).FirstOrDefault();
+            Athlete SelectedAthlete = db.Athletes.Find(AthleteId);
+
+            if(SelectedWorkout == null || SelectedAthlete == null)
+            {
+                return NotFound();
+            }
+
+            SelectedWorkout.Athletes.Add(SelectedAthlete);
+            db.SaveChanges();
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// Gathers an Athlete not associated with a particular workout through workoutId
+        /// </summary>
+        /// <returns>
+        /// Header: 200(Ok) or
+        /// Header: 404(Not Found)
+        /// </returns>
+        /// <param name="workoutId">Workout ID primary key</param>
+        /// <param name="athleteId">Athlete ID primary key</param>
+        /// <example>
+        /// GET: api/workoutdata/unassociateworkoutwithathlete/{workoutId}/{athleteId}
+        ///      api/workoutdata/unassociateworkoutwithathlete/1/1
+        /// </example>
+
+        [HttpPost]
+        [Route("api/workoutdata/unassociateworkoutwithathlete/{workoutId}/{athleteId}")]
+        [Authorize]
+        public IHttpActionResult UnssociateWorkoutWithAthlete(int WorkoutId, int AthleteId)
+        {
+
+            Workout SelectedWorkout = db.Workouts.Include(w => w.Athletes).Where( w => w.WorkoutId == WorkoutId).FirstOrDefault();
+            Athlete SelectedAthlete = db.Athletes.Find(AthleteId);
+
+            if (SelectedWorkout == null || SelectedAthlete == null)
+            {
+                return NotFound();
+            }
+
+            SelectedWorkout.Athletes.Remove(SelectedAthlete);
+            db.SaveChanges();
+
+            return Ok();
+        }
+
+        /// <summary>
         /// Provides workout information in the system
         /// </summary>
         /// <returns>
