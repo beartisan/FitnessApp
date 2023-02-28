@@ -47,10 +47,10 @@ namespace FitnessApp.Controllers
         }
 
         /// <summary>
-        /// Returns information about all workout relating to particular category Id
+        /// Returns information about all workout relating to a particular category Id
         /// </summary>
         /// <returns>
-        /// CONTENT: all workout in the database that including their associated category Id.
+        /// CONTENT: all workout in the database that including their associated category .
         /// </returns>
         /// <param name="id">Category ID</param>
         /// <example>
@@ -62,6 +62,41 @@ namespace FitnessApp.Controllers
         public IHttpActionResult WorkoutListForCategory(int id)
         {
             List<Workout> Workouts = db.Workouts.Where(w=>w.CategoryId==id).ToList();
+            List<WorkoutDto> WorkoutDtos = new List<WorkoutDto>();
+
+            Workouts.ForEach(w => WorkoutDtos.Add(new WorkoutDto()
+            {
+                WorkoutId = w.WorkoutId,
+                WorkoutName = w.WorkoutName,
+                WorkoutDate = w.WorkoutDate,
+                WorkoutDuration = w.WorkoutDuration,
+                CategoryId = w.Category.CategoryId,
+                CategoryName = w.Category.CategoryName
+            }));
+
+            return Ok(WorkoutDtos);
+        }
+
+        /// <summary>
+        /// Gathers information about the workout relating to their particular Athlete Id
+        /// </summary>
+        /// <returns>
+        /// CONTENT: all workout in the database that including their associated category that mathches the particular athlete.
+        /// </returns>
+        /// <param name="id">Athlete ID</param>
+        /// <example>
+        ///GET: api/WorkoutData/WorkoutListForAthlete/1
+        /// </example>
+
+        [HttpGet]
+        [ResponseType(typeof(WorkoutDto))]
+        public IHttpActionResult WorkoutListForAthlete(int id)
+        {
+            //all workout where animals that have the athlete that matches the id
+            List<Workout> Workouts = db.Workouts.Where(
+                   w => w.Athletes.Any(
+                    a=>a.AthleteId == id
+                )).ToList();
             List<WorkoutDto> WorkoutDtos = new List<WorkoutDto>();
 
             Workouts.ForEach(w => WorkoutDtos.Add(new WorkoutDto()

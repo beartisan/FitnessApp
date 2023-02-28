@@ -8,9 +8,7 @@ using System.Diagnostics;
 using FitnessApp.Models;
 using FitnessApp.Models.ViewModels;
 using System.Web.Script.Serialization;
-using Newtonsoft.Json;
-//using System.Threading.Tasks;
-//using Newtonsoft.Json;
+
 
 namespace FitnessApp.Controllers
 {
@@ -91,6 +89,8 @@ namespace FitnessApp.Controllers
         // GET: Workout/Details/5
         public ActionResult Details(int id)
         {
+            WorkoutDetails ViewModel = new WorkoutDetails();
+
             //objective: communicate with our workout data api to retrieve a workout
             //curl https://localhost:44376/api/workoutdata/findworkout/{id}
 
@@ -102,11 +102,9 @@ namespace FitnessApp.Controllers
            // Debug.WriteLine(response.StatusCode);
 
             //parse message into IEnumerable
-            WorkoutDto relatedWorkout = response.Content.ReadAsAsync<WorkoutDto>().Result;
+            WorkoutDto SelectedWorkout = response.Content.ReadAsAsync<WorkoutDto>().Result;
            // Debug.WriteLine("Workout Found is : ");
-           // Debug.WriteLine(relatedWorkout.WorkoutName);
-
-            ViewModel.relatedWorkout = relatedWorkout;
+            ViewModel.SelectedWorkout = SelectedWorkout;
 
             //Shows athletes that are sharing specific workout
             url = "athletedata/ListAthletesWithThisWorkout/" + id;

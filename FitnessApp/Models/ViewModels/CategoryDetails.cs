@@ -10,6 +10,6 @@ namespace FitnessApp.Models.ViewModels
         internal IEnumerable<WorkoutDto> relatedWorkout;
 
         public CategoriesDto SelectedCategory { get; set; }
-        public IEnumerable<WorkoutDto> RelatedWorkouts { get; set; }
+        public IEnumerable<WorkoutDto> RelatedWorkout { get; set; }
     }
 }

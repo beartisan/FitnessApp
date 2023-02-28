@@ -29,7 +29,7 @@ namespace FitnessApp.Controllers
             //objective: communicate with our category data api to retrieve a list of categories
             //curl https://localhost:44376/api/categorydata/categorylist
 
-            string url = "category/categorylist";
+            string url = "categorydata/categorylist";
             HttpResponseMessage response = client.GetAsync(url).Result;
 
             IEnumerable<CategoriesDto> Categories = response.Content.ReadAsAsync<IEnumerable<CategoriesDto>>().Result;
@@ -45,7 +45,7 @@ namespace FitnessApp.Controllers
 
             CategoryDetails ViewModel = new CategoryDetails();
 
-            string url = "category/findcategory/" + id;
+            string url = "categorydata/findcategory/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
 
             CategoriesDto selectedCategory = response.Content.ReadAsAsync<CategoriesDto>().Result;
@@ -55,9 +55,9 @@ namespace FitnessApp.Controllers
             //send a request to gather information about workout related to particular category Id
             url = "workoutdata/WorkoutListForCategory/" + id;
             response = client.GetAsync(url).Result;
-            IEnumerable<WorkoutDto> relatedWorkout = response.Content.ReadAsAsync<IEnumerable<WorkoutDto>>().Result;
+            IEnumerable<WorkoutDto> RelatedWorkout = response.Content.ReadAsAsync<IEnumerable<WorkoutDto>>().Result;
 
-            ViewModel.relatedWorkout = relatedWorkout;
+            ViewModel.RelatedWorkout = RelatedWorkout;
 
 
             return View(ViewModel);
@@ -80,7 +80,7 @@ namespace FitnessApp.Controllers
         {
             //objective: add a new category into the system using API
             //curl -H "Content-Type: application/json" -d @Category.json https://localhost:44376/api/categorydata/addcategory
-            string url = "category/addcategory";
+            string url = "categorydata/addcategory";
 
             string jsonpayload = jss.Serialize(Category);
             Debug.WriteLine(jsonpayload);
@@ -102,7 +102,7 @@ namespace FitnessApp.Controllers
         // GET: Category/Edit/5
         public ActionResult Edit(int id)
         {
-            string url = "category/findcategory/" + id;
+            string url = "categorydata/findcategory/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
 
             CategoriesDto selectedCategory = response.Content.ReadAsAsync<CategoriesDto>().Result;
@@ -120,7 +120,7 @@ namespace FitnessApp.Controllers
 
             CategoryDetails ViewModel = new CategoryDetails();
 
-            string url = "category/updatecategory/" + id;
+            string url = "categorydata/updatecategory/" + id;
             string jsonpayload = jss.Serialize(Category);
 
             HttpContent content = new StringContent(jsonpayload);
@@ -141,7 +141,7 @@ namespace FitnessApp.Controllers
         // GET: Category/Delete/5
         public ActionResult DeleteConfirm(int id)
         {
-            string url = "category/findcategory/" + id;
+            string url = "categorydata/findcategory/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
             CategoriesDto selectedCategory = response.Content.ReadAsAsync<CategoriesDto>().Result;
 
@@ -157,7 +157,7 @@ namespace FitnessApp.Controllers
 
             CategoryDetails ViewModel = new CategoryDetails();
 
-            string url = "category/deletecategory/" + id;
+            string url = "categorydata/deletecategory/" + id;
 
             HttpContent content = new StringContent("");
 

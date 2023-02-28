@@ -6,88 +6,168 @@ using System.Web.Mvc;
 using System.Net.Http;
 using System.Diagnostics;
 using FitnessApp.Models;
+using FitnessApp.Models.ViewModels;
 using System.Web.Script.Serialization;
 
-//namespace FitnessApp.Controllers
-//{
-//    public class AthleteController : Controller
-//    {
-//        // GET: Athlete
-//        public ActionResult Index()
-//        {
-//            return View();
-//        }
+namespace FitnessApp.Controllers
+{
+    public class AthleteController : Controller
+    {
+        private static readonly HttpClient client;
+        private JavaScriptSerializer jss = new JavaScriptSerializer();
 
-//        // GET: Athlete/Details/5
-//        public ActionResult Details(int id)
-//        {
-//            return View();
-//        }
+        static AthleteController()
+        {
+            client = new HttpClient();
+            client.BaseAddress = new Uri("https://localhost:44376/api/");
+        }
+   
+            // GET: Athlete/List
+            public ActionResult Index()
+        {
+            //objective: communicate with our athlete data api to retrieve a list of athletes
+            //curl https://localhost:44376/api/athletedata/athletelist
 
-//        // GET: Athlete/Create
-//        public ActionResult Create()
-//        {
-//            return View();
-//        }
+            string url = "athletedata/athletelist";
+            HttpResponseMessage response = client.GetAsync(url).Result;
 
-//        // POST: Athlete/Create
-//        [HttpPost]
-//        public ActionResult Create(FormCollection collection)
-//        {
-//            try
-//            {
-//                // TODO: Add insert logic here
+            IEnumerable<AthleteDto> Athletes = response.Content.ReadAsAsync<IEnumerable<AthleteDto>>().Result;
 
-//                return RedirectToAction("Index");
-//            }
-//            catch
-//            {
-//                return View();
-//            }
-//        }
+            return View(Athletes);
+        }
 
-//        // GET: Athlete/Edit/5
-//        public ActionResult Edit(int id)
-//        {
-//            return View();
-//        }
+        // GET: Athlete/Details/5
+        public ActionResult Details(int id)
+        {
+            AthleteDetails ViewModel = new AthleteDetails();
 
-//        // POST: Athlete/Edit/5
-//        [HttpPost]
-//        public ActionResult Edit(int id, FormCollection collection)
-//        {
-//            try
-//            {
-//                // TODO: Add update logic here
+            //objective: communicate with our athlete data api to retrieve one athlete
+            //curl https://localhost:44376/api/Athletedata/findAthlete/{id}
 
-//                return RedirectToAction("Index");
-//            }
-//            catch
-//            {
-//                return View();
-//            }
-//        }
+            string url = "athletedata/findathlete/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
 
-//        // GET: Athlete/Delete/5
-//        public ActionResult Delete(int id)
-//        {
-//            return View();
-//        }
+            AthleteDto SelectedAthlete = response.Content.ReadAsAsync<AthleteDto>().Result;
+            ViewModel.SelectedAthlete = SelectedAthlete;
 
-//        // POST: Athlete/Delete/5
-//        [HttpPost]
-//        public ActionResult Delete(int id, FormCollection collection)
-//        {
-//            try
-//            {
-//                // TODO: Add delete logic here
+            //showcase info about workout related to this athlete
+            //send a request to gather information about workout related to particular athlete Id
+            url = "workoutdata/WorkoutListForAthlete/" + id;
+            response = client.GetAsync(url).Result;
+            IEnumerable<WorkoutDto> CurrentWorkout = response.Content.ReadAsAsync<IEnumerable<WorkoutDto>>().Result;
 
-//                return RedirectToAction("Index");
-//            }
-//            catch
-//            {
-//                return View();
-//            }
-//        }
-//    }
-//}
+            ViewModel.CurrentWorkout = CurrentWorkout;
+
+            return View(ViewModel);
+        }
+
+        public ActionResult Error()
+        {
+            return View();
+        }
+
+        // GET: Athlete/New
+        public ActionResult New()
+        {
+            return View();
+        }
+
+        // POST: Athlete/Create
+        [HttpPost]
+        public ActionResult Create(Athlete Athlete)
+        {
+            //objective: add a new athlete into the system using API
+            //curl -H "Content-Type: application/json" -d @Athlete.json https://localhost:44376/api/athletedata/addathlete
+            string url = "athletedata/addathlete";
+
+            string jsonpayload = jss.Serialize(Athlete);
+            Debug.WriteLine(jsonpayload);
+
+            HttpContent content = new StringContent(jsonpayload);
+            content.Headers.ContentType.MediaType = "application/json";
+
+            HttpResponseMessage response = client.PostAsync(url, content).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("List");
+            }
+            else
+            {
+                return RedirectToAction("Error");
+            }
+        }
+
+        // GET: Athlete/Edit/5
+        public ActionResult Edit(int id)
+        {
+            string url = "athletedata/findathlete/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+
+            AthleteDto SelectedAthlete = response.Content.ReadAsAsync<AthleteDto>().Result;
+
+            return View(SelectedAthlete);
+        }
+
+        // POST: Athlete/Update/5
+        [HttpPost]
+        public ActionResult Update(int id, Athlete Athlete)
+        {
+            //objective: communicate with our athlete data api to retrieve one athlete
+            //curl https://localhost:44376/api/athletedata/updateathlete/{id}
+
+            AthleteDetails ViewModel = new AthleteDetails();
+
+            string url = "athletedata/updateathlete/" + id;
+            string jsonpayload = jss.Serialize(Athlete);
+
+            HttpContent content = new StringContent(jsonpayload);
+            content.Headers.ContentType.MediaType = "application/json";
+            HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("List");
+            }
+            else
+            {
+                return RedirectToAction("Error");
+            }
+        }
+
+        // GET: Athlete/Delete/5
+        public ActionResult Delete(int id)
+        {
+            string url = "athletedata/findAthlete/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            AthleteDto SelectedAthlete = response.Content.ReadAsAsync<AthleteDto>().Result;
+
+            return View(SelectedAthlete);
+        }
+
+        // POST: Athlete/Delete/5
+        [HttpPost]
+        public ActionResult Delete(int id, Athlete Athlete)
+        {
+            //objective: delete the Athlete through API using their AthleteID
+            ///curl -H "Content-Type: application/json" -d @Athlete.json https://localhost:44376/api/athletedata/deleteathlete/{id}
+
+            AthleteDetails ViewModel = new AthleteDetails();
+
+            string url = "Athletedata/deleteathlete/" + id;
+
+            HttpContent content = new StringContent("");
+
+            content.Headers.ContentType.MediaType = "application/json";
+            HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("List");
+            }
+            else
+            {
+                return RedirectToAction("Error");
+            }
+        }
+    }
+}

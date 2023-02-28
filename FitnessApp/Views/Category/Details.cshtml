@@ -18,7 +18,7 @@
 <div style="margin-top: 90px;">
     <h3>Workout Related to this Category:</h3>
 
-    @foreach (var workout in Model.RelatedWorkouts)
+    @foreach(var workout in Model.RelatedWorkout)
     {
         <a href="/workout/details/@workout.WorkoutId">@workout.WorkoutName</a>
         <br />
