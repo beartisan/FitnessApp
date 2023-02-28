@@ -27,9 +27,9 @@ namespace FitnessApp.Controllers
         public ActionResult Index()
         {
             //objective: communicate with our category data api to retrieve a list of categories
-            //curl https://localhost:44376/api/categoriesdata/categorylist
+            //curl https://localhost:44376/api/categorydata/categorylist
 
-            string url = "categoriesdata/categorylist";
+            string url = "category/categorylist";
             HttpResponseMessage response = client.GetAsync(url).Result;
 
             IEnumerable<CategoriesDto> Categories = response.Content.ReadAsAsync<IEnumerable<CategoriesDto>>().Result;
@@ -41,19 +41,26 @@ namespace FitnessApp.Controllers
         public ActionResult Details(int id)
         {
             //objective: communicate with our category data api to retrieve one category
-            //curl https://localhost:44376/api/categoriesdata/findcategory/{id}
+            //curl https://localhost:44376/api/categorydata/findcategory/{id}
 
             CategoryDetails ViewModel = new CategoryDetails();
 
-            string url = "categoriesdata/findcategory/" + id;
+            string url = "category/findcategory/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
 
             CategoriesDto selectedCategory = response.Content.ReadAsAsync<CategoriesDto>().Result;
             ViewModel.SelectedCategory = selectedCategory;
 
             //showcase info about workout related to this category
+            //send a request to gather information about workout related to particular category Id
+            url = "workoutdata/WorkoutListForCategory/" + id;
+            response = client.GetAsync(url).Result;
+            IEnumerable<WorkoutDto> relatedWorkout = response.Content.ReadAsAsync<IEnumerable<WorkoutDto>>().Result;
 
-            return View(selectedCategory);
+            ViewModel.relatedWorkout = relatedWorkout;
+
+
+            return View(ViewModel);
         }
 
        public ActionResult Error()
@@ -72,8 +79,8 @@ namespace FitnessApp.Controllers
         public ActionResult Create(Category Category)
         {
             //objective: add a new category into the system using API
-            //curl -H "Content-Type: application/json" -d @Category.json https://localhost:44376/api/categoriesdata/addcategory
-            string url = "categorydata/addcategory";
+            //curl -H "Content-Type: application/json" -d @Category.json https://localhost:44376/api/categorydata/addcategory
+            string url = "category/addcategory";
 
             string jsonpayload = jss.Serialize(Category);
             Debug.WriteLine(jsonpayload);
@@ -95,7 +102,7 @@ namespace FitnessApp.Controllers
         // GET: Category/Edit/5
         public ActionResult Edit(int id)
         {
-            string url = "categoriesdata/findcategory/" + id;
+            string url = "category/findcategory/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
 
             CategoriesDto selectedCategory = response.Content.ReadAsAsync<CategoriesDto>().Result;
@@ -109,11 +116,11 @@ namespace FitnessApp.Controllers
         {
 
             //objective: communicate with our category data api to retrieve one category
-            //curl https://localhost:44376/api/categoriesdata/updatecategory/{id}
+            //curl https://localhost:44376/api/categorydata/updatecategory/{id}
 
             CategoryDetails ViewModel = new CategoryDetails();
 
-            string url = "categoriesdata/updatecategory/" + id;
+            string url = "category/updatecategory/" + id;
             string jsonpayload = jss.Serialize(Category);
 
             HttpContent content = new StringContent(jsonpayload);
@@ -134,7 +141,7 @@ namespace FitnessApp.Controllers
         // GET: Category/Delete/5
         public ActionResult DeleteConfirm(int id)
         {
-            string url = "categoriesdata/findcategory/" + id;
+            string url = "category/findcategory/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
             CategoriesDto selectedCategory = response.Content.ReadAsAsync<CategoriesDto>().Result;
 
@@ -146,11 +153,11 @@ namespace FitnessApp.Controllers
         public ActionResult Delete(int id)
         {
             //objective: delete the category through API using their categoryID
-            ///curl -H "Content-Type: application/json" -d @Category.json https://localhost:44376/api/categoriesdata/deletecategory/{id}
+            ///curl -H "Content-Type: application/json" -d @Category.json https://localhost:44376/api/categorydata/deletecategory/{id}
 
             CategoryDetails ViewModel = new CategoryDetails();
 
-            string url = "categoriesdata/deletecategory/" + id;
+            string url = "category/deletecategory/" + id;
 
             HttpContent content = new StringContent("");
 

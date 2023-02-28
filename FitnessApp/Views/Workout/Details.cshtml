@@ -1,4 +1,4 @@
-﻿@model FitnessApp.Models.ViewModels.DetailsWorkout
+﻿@model FitnessApp.Models.ViewModels.WorkoutDetails
 
 @{
     ViewBag.Title = "View";
@@ -23,7 +23,7 @@
     <h3>Associated Athletes for @Model.SelectedWorkout.WorkoutName:</h3>
     @foreach(var athlete in Model.AssociatedAthletes)
             {
-                @*regarding workout controller and athlete controller*@
+                @*regarding viewModels in WorkoutDetails*@
 
                 <a href="/athlete/details/@athlete.athleteId">@athlete.atheteFirstName @athlete.athleteLastName</a>
                 <a style="color: #ff0000;" href="/athlete/unassociated.@Model.SelectedWorkout.WorkoutId?AthleteId=@athlete.AthleteId">[x]</a>
@@ -33,7 +33,7 @@
         <h3>Add new Athlete to this workout @Model.SelectedWorkout.WorkoutName</h3>
         <form action="/workout/associate/@Model.SelectedWorkout.WorkoutId" method="POST">
             <select name="AthleteId">
-               @foreach (var athlete in Model.GivenAthletes)
+               @foreach (var athlete in Model.UnassociatedAthletes)
                 {
                     <option value="@athlete.athleteId">@athlete.atheteFirstName @athlete.athleteLastName</option>
                 }

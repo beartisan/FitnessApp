@@ -98,15 +98,15 @@ namespace FitnessApp.Controllers
             string url = "workoutdata/findworkout/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
 
-            Debug.WriteLine("The request is ");
-            Debug.WriteLine(response.StatusCode);
+           // Debug.WriteLine("The request is ");
+           // Debug.WriteLine(response.StatusCode);
 
             //parse message into IEnumerable
-            WorkoutDto selectedWorkout = response.Content.ReadAsAsync<WorkoutDto>().Result;
-            Debug.WriteLine("Workout Found is : ");
-            Debug.WriteLine(selectedWorkout.WorkoutName);
+            WorkoutDto relatedWorkout = response.Content.ReadAsAsync<WorkoutDto>().Result;
+           // Debug.WriteLine("Workout Found is : ");
+           // Debug.WriteLine(relatedWorkout.WorkoutName);
 
-            ViewModel.selectedWorkout = selectedWorkout;
+            ViewModel.relatedWorkout = relatedWorkout;
 
             //Shows athletes that are sharing specific workout
             url = "athletedata/ListAthletesWithThisWorkout/" + id;

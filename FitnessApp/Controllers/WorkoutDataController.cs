@@ -28,6 +28,7 @@ namespace FitnessApp.Controllers
         /// </example>
        
         [HttpGet]
+        [ResponseType(typeof(WorkoutDto))]
         public IHttpActionResult WorkoutList()
         {
             List<Workout> Workouts = db.Workouts.ToList();
@@ -44,11 +45,43 @@ namespace FitnessApp.Controllers
 
             return Ok(WorkoutDtos);
         }
+
         /// <summary>
-        /// Provides workout information in the system related to category id
+        /// Returns information about all workout relating to particular category Id
         /// </summary>
         /// <returns>
-        /// CONTENT: all workout in the database, including their categories.
+        /// CONTENT: all workout in the database that including their associated category Id.
+        /// </returns>
+        /// <param name="id">Category ID</param>
+        /// <example>
+        ///GET: api/WorkoutData/WorkoutListForCategory/5
+        /// </example>
+
+        [HttpGet]
+        [ResponseType(typeof(WorkoutDto))]
+        public IHttpActionResult WorkoutListForCategory(int id)
+        {
+            List<Workout> Workouts = db.Workouts.Where(w=>w.CategoryId==id).ToList();
+            List<WorkoutDto> WorkoutDtos = new List<WorkoutDto>();
+
+            Workouts.ForEach(w => WorkoutDtos.Add(new WorkoutDto()
+            {
+                WorkoutId = w.WorkoutId,
+                WorkoutName = w.WorkoutName,
+                WorkoutDate = w.WorkoutDate,
+                WorkoutDuration = w.WorkoutDuration,
+                CategoryId = w.Category.CategoryId,
+                CategoryName = w.Category.CategoryName
+            }));
+
+            return Ok(WorkoutDtos);
+        }
+
+        /// <summary>
+        /// Provides workout information in the system
+        /// </summary>
+        /// <returns>
+        /// CONTENT: all workout in the database, matching their workoutID
         /// </returns>
         /// <param name="id">workout Id</param>
         /// <example>

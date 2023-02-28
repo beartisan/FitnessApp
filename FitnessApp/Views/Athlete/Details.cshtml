@@ -1,4 +1,4 @@
-﻿@model FitnessApp.Models.ViewModels.DetailsAthlete
+﻿@model FitnessApp.Models.ViewModels.AthleteDetails
 
 @{
     ViewBag.Title = "View";
@@ -17,8 +17,8 @@
 
 <div class="workout-container">
     <h3>Workout Lists:</h3>
-    @*referencing athletecontroller*@
-    @foreach (var workout in Model.KeptWorkouts)
+    @*referencing athletecontroller and viewModel of AthleteDetails*@
+    @foreach (var workout in Model.CurrentWorkout)
     {
         <a href="/workout/details/@workout.WorkoutId">@workout.WorkoutName</a>
         <br />
