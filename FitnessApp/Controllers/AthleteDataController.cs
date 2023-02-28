@@ -79,7 +79,7 @@ namespace FitnessApp.Controllers
         /// </summary>
         /// <param name="id">Primary key of Workout ID</param>
         /// <returns>
-        /// content: Shows all athletes in the system not associated to a particular workout
+        /// content: Shows all athletes in the system NOT associated to a particular workout
         /// </returns>
         ///<example>
         /// GET: api/AthleteData/ListAthletesWithoutThisWorkout/2

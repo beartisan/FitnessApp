@@ -179,10 +179,10 @@ namespace FitnessApp.Controllers
             UpdateWorkout ViewModel = new UpdateWorkout();
 
             //existing workout information
-            string url = "workoutdata/" + id;
+            string url = "workoutdata/findworkout/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
-            WorkoutDto selectedWorkout = response.Content.ReadAsAsync<WorkoutDto>().Result;
-            ViewModel.selectedWorkout = selectedWorkout;
+            WorkoutDto SelectedWorkout = response.Content.ReadAsAsync<WorkoutDto>().Result;
+            ViewModel.SelectedWorkout = SelectedWorkout;
 
             //include ALL category to choose from when updating workout
             url = "categorydata/categorylist";
@@ -192,7 +192,6 @@ namespace FitnessApp.Controllers
             ViewModel.CategoryOptions = CategoryOptions;
 
             return View(ViewModel);
-            //return View(selectedWorkout);
         }
 
         public ActionResult Error()

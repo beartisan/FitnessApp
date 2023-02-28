@@ -6,7 +6,7 @@
 
 <h2>Show Workout</h2>
 
-<a href="/Workout/List">Go back to Workout List</a>
+<a href="/Workout/List">  &larr; Go back to Workout List</a>
 <br />
 
 <a href="/Workout/Edit/@Model.SelectedWorkout.WorkoutId" style="color: #0094ff;">Update Workout</a>
@@ -14,28 +14,28 @@
 
 <a href="/Athlete/DeleteConfirm/@Model.SelectedWorkout.WorkoutId" style="color: #d92929;"> Delete Workout </a>
 
-    <h3>@Model.WorkoutName</h3>
-    <div>Date: @Model.WorkoutDate</div>
-    <div>Duration: @Model.WorkoutDuration minutes</div>
-    <div>Category: @Model.CategoryName</div>
+    <h3>@Model.SelectedWorkout.WorkoutName</h3>
+    <div>Date: @Model.SelectedWorkout.WorkoutDate</div>
+    <div>Duration: @Model.SelectedWorkout.WorkoutDuration minutes</div>
+    <div>Category: @Model.SelectedWorkout.CategoryName</div>
 
 <div class="athlete-container">
-    <h3>Associated Athletes for @Model.SelectedWorkout.WorkoutName:</h3>
+    <h3>Athletes doing this Workout: @Model.SelectedWorkout.WorkoutName:</h3>
     @foreach(var athlete in Model.AssociatedAthletes)
             {
                 @*regarding viewModels in WorkoutDetails*@
 
-                <a href="/athlete/details/@athlete.athleteId">@athlete.atheteFirstName @athlete.athleteLastName</a>
-                <a style="color: #ff0000;" href="/athlete/unassociated.@Model.SelectedWorkout.WorkoutId?AthleteId=@athlete.AthleteId">[x]</a>
+                <a href="/athlete/details/@athlete.AthleteId">@athlete.AthleteFirstName @athlete.AthleteLastName</a>
+                <a style="color: #ff0000;" href="/athlete/unassociate/@Model.SelectedWorkout.WorkoutId?AthleteId=@athlete.AthleteId">[x]</a>
                 <br />
             }
     <div>
-        <h3>Add new Athlete to this workout @Model.SelectedWorkout.WorkoutName</h3>
+        <h3>Add New Athlete to this workout @Model.SelectedWorkout.WorkoutName</h3>
         <form action="/workout/associate/@Model.SelectedWorkout.WorkoutId" method="POST">
             <select name="AthleteId">
                @foreach (var athlete in Model.UnassociatedAthletes)
                 {
-                    <option value="@athlete.athleteId">@athlete.atheteFirstName @athlete.athleteLastName</option>
+                    <option value="@athlete.AthleteId">@athlete.AthleteFirstName @athlete.AthleteLastName</option>
                 }
             </select>
             <input type="submit" value="Add This Athlete"/>

@@ -42,7 +42,7 @@ namespace FitnessApp.Controllers
             AthleteDetails ViewModel = new AthleteDetails();
 
             //objective: communicate with our athlete data api to retrieve one athlete
-            //curl https://localhost:44376/api/Athletedata/findAthlete/{id}
+            //curl https://localhost:44376/api/athletedata/findAthlete/{id}
 
             string url = "athletedata/findathlete/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;

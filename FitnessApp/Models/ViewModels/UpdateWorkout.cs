@@ -10,7 +10,7 @@ namespace FitnessApp.Models.ViewModels
         //This Viewmodel is a class --> Stores info we need to present to /workout/update/{id}
 
         //existing workout information
-        public WorkoutDto selectedWorkout { get; set; }
+        public WorkoutDto SelectedWorkout { get; set; }
 
         //include ALL category to choose from when updating workout
 
