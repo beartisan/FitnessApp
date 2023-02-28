@@ -5,4 +5,5 @@
 Login details
 
 admin username: bea@test.com
+--
 password: Password!1
